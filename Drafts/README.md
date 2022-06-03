@@ -20,6 +20,7 @@ Rules of repo managing:
 1. **Nobody** should push directly to upstream main branch
 2. Any PR should only be merged with **at least 1** approve from another team member
 3. Any PR should be **squashed** before merging
+4. Any merged PR should have a meaningful commit message in the form `<component that is changed>:<summary of what change has been made>`
 
 #### Idea Page
 [Idea Doc](https://docs.google.com/document/d/1d2Zqu2CUBEBWm6C0IICZMAujLx7gIzBC6YNSrRdoTGc/edit)
