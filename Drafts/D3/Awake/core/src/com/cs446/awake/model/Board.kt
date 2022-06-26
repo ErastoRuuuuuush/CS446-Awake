@@ -14,7 +14,7 @@ class Board (val player: Player,val enemy: Enemy) {
     private var currentRound = 0
 
     init {
-        startGame()
+//        startGame()
     }
 
     private fun startGame() {
