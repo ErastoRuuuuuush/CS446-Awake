@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Array
 
-abstract class Character (val charName: String, var HP: Int, var energy: Int, var strength: Int, val deck: Deck, var state: State) {
+abstract class Character (val charName: String, var HP: Int, var energy: Int, var strength: Int, val deck: Deck, var state: MutableList<State>) {
 
     var hand: Array<Card> = Array<Card>()
     // var deck: Array<Card> = Array<Card>()
@@ -19,7 +19,11 @@ abstract class Character (val charName: String, var HP: Int, var energy: Int, va
     }
 
     fun updateState(newState: State){
-        state = newState
+        state.add(newState)
+    }
+
+    fun removeState(removedStates: MutableList<String>){
+
     }
 
     fun updateHealth(HpChange: Int){

@@ -29,10 +29,10 @@ class Awake : Game() {
         for (i in 1..5) {
             deck.addCard(Card("empty", "card_empty.png", "use"))
         }
-        val state = State()
-        val player = Player("Hero",100, 10, 10, deck, state)
+        val states : MutableList<State> = mutableListOf()
+        val player = Player("Hero",100, 10, 10, deck, states)
         val imgs = Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png"))
-        val enemy = Enemy(imgs,"Enemy",999, 99, 99, deck, state)
+        val enemy = Enemy(imgs,"Enemy",999, 99, 99, deck, states)
         board = Board(player, enemy, player, 1)
 
     }
