@@ -41,7 +41,7 @@ class Awake : Game() {
         enemy.updateState(State("Burn", 3))
         enemy.updateState(State("Freeze", 3))
 
-        board = Board(player, enemy, player, 1)
+        board = Board(player, enemy)
 
 
     }

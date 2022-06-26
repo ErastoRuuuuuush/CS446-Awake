@@ -86,7 +86,7 @@ class State(val stateName: String,
         effectiveRound += extendedState.effectiveRound
     }
 
-    fun apply(target: Character{
+    fun apply(target: Character){
         target.removeState(releaseList)
         // check if the state can be released
 

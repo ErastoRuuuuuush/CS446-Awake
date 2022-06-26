@@ -47,10 +47,10 @@ class Board (val player: Player,val enemy: Enemy) {
         val Card = turn.selectHandCard()
 
         // Option 1 - Notify one
-        target.useCard(Card, from = turn)
+        // target.useCard(Card, from = turn)
         // Option 2 - Notify everyone
-        // target.update(Card, from = turn)
-        // turn.update(Card, from = turn)
+        target.update(Card, from = turn)
+        turn.update(Card, from = turn)
     }
 
     private fun endRound(){}
