@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Array
 
 abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: Int, val maxStrength: Int, val deck: Deck, var state: MutableList<State>) {
-    var hand= Deck()
+    var hand: MutableList<ActionCard> = mutableListOf()
     var energy = maxEnergy
     var strength = maxStrength
     var HP = maxHP
@@ -31,13 +31,13 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
     }
 
     open fun selectHandCard(): ActionCard {
-        return hand.pop()
+        return hand[0]
     }
 
     // add try catch block for 1. empty deck 2.hand full
     open fun drawCard(){
         val c = deck.pop() // deck should shuffle when it is empty
-        hand.addCard(c)
+        hand.add(c)
     }
 
     fun updateState(newState: State){
