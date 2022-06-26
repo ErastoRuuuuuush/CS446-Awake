@@ -64,12 +64,17 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
         // demo only, restore some amount of energy in real game
         energy = maxEnergy
         strength = maxStrength
+        drawCard()
         for (s in state) {
             s.apply(this)
         }
     }
 
-    open fun reset() {}
+    open fun reset() {
+        for (i in 1..5) {
+            drawCard()
+        }
+    }
 
     open fun endRound() {}
 
