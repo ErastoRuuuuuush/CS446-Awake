@@ -20,6 +20,7 @@ class Board (val player: Player,val enemy: Enemy) {
     private fun startGame() {
         turn.reset()
         target.reset()
+        print("game started")
         while (!finished()) {
             // Separate function for easy maintenance and upgrade add-ons in future.
             currentRound++
