@@ -105,6 +105,7 @@ class State(val stateName: String,
         // damage
         val damageAmount = (damage * target.HP).toInt()
         target.updateHealth(damageAmount)
+        println(stateName + " deals $damageAmount damage")
 
         // strength effect
         val strengthAmount = (strengthEffect * target.strength).toInt()

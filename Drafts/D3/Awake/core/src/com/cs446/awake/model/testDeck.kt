@@ -9,7 +9,7 @@ fun getTestDeck(): Deck {
         // make 5 - i attack cards with damage i
         var j = i
         while (j < 5) {
-            val attackCard = ActionCard(("AttackCard$i$j"),"Attack.png", "Deals $i damage after costing ${j/2} strength", 0, j/2, -i, Array<State>(0))
+            val attackCard = ActionCard(("AttackCard$i$j"),"Attack.png", "Deals ${i*10} damage after costing ${j/2} strength", 0, j/2, -i*10, Array<State>(0))
             testDeck.addCard(attackCard)
             j ++
         }

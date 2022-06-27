@@ -253,12 +253,12 @@ class BattleScreen(private val board: Board) : BaseScreen(){
                     val deck1 = getTestDeck()
                     val deck2 = getTestDeck()
                     val playerStates : MutableList<State> = mutableListOf()
-                    val player = Player("Hero",900, 10, 10, deck1, playerStates, PlayerType.Human)
+                    val player = Player("Hero",300, 10, 10, deck1, playerStates, PlayerType.Human)
 
                     val imgs = Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png"))
 
                     val enemyStates : MutableList<State> = mutableListOf()
-                    val enemy = Enemy(imgs,"Enemy",20, 99, 99, deck2, enemyStates, PlayerType.AI)
+                    val enemy = Enemy(imgs,"Enemy",100, 99, 99, deck2, enemyStates, PlayerType.AI)
 
                     val newboard = Board(player, enemy)
                     Awake.setActiveScreen(EnterScreen(newboard))
