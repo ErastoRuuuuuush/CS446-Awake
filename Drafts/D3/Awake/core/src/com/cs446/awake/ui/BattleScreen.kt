@@ -86,7 +86,7 @@ class BattleScreen(private val board: Board) : BaseScreen(){
             )
             stateActor.setOpacity(0.3f)
 
-            for (enemyState in board.player.states) {
+            for (enemyState in board.enemy.states) {
                 if (enemyState.stateName == state) stateActor.setOpacity(1f)
             }
         }

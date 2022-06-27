@@ -92,7 +92,10 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
         strength = maxStrength
         while (hand.size < 5) drawCard()
 
+
+        println("start with states:")
         for (s in states) {
+            println(s.stateName + " for ${s.effectiveRound} rounds")
             s.apply(this)
         }
     }
