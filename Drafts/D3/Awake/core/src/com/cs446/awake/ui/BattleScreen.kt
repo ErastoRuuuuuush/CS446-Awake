@@ -249,7 +249,7 @@ class BattleScreen(private val board: Board) : BaseScreen(){
                 button: Int
             ): Boolean {
                 textButton.remove()
-                board.startGame()
+                board.startRound()
                 startGame()
                 return true
             }

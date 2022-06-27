@@ -26,14 +26,9 @@ class Board (val player: Player,val enemy: Enemy) {
     fun startGame() {
         print("game started")
         if (win() == null) {
-            current.preRound()
-            currentRound++
-            println ("current round $currentRound")
-            /*
-            if (currentRound % 2 == 1) preRound()
-
-             */
+            startRound()
         }
+
 //            // Separate function for easy maintenance and upgrade add-ons in future.
 //            currentRound++
 //            preRound()
@@ -82,14 +77,16 @@ class Board (val player: Player,val enemy: Enemy) {
         current.update(card, from = current)
     }
 
-    private fun startRound() {
-//        val card = turn.selectHandCard() ?: return
+    fun startRound() {
+        println("round $currentRound started")
+        if (win() == null) {
+            current.preRound()
+            currentRound++
+            /*
+            if (currentRound % 2 == 1) preRound()
 
-        // Option 1 - Notify one
-        // target.useCard(Card, from = turn)
-        // Option 2 - Notify everyone
-//        target.update(card, from = turn)
-//        turn.update(card, from = turn)
+             */
+        }
     }
 
     private fun endRound(){}
