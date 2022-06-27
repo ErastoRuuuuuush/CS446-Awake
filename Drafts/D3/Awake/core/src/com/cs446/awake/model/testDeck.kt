@@ -20,15 +20,15 @@ fun getTestDeck(): Deck {
         i ++
     }
     // make some state cards
-    i = 1
-    while (i < 4){
-        val stateCard1 = ActionCard("burner$i", "Fire.png", "burns target for $i rounds and poison target for 1 round",
-            i, 0, 0, Array<State>(arrayOf(State("Burn", i),State("Poison", 1))))
+    i = 2
+    while (i < 8){
+        val stateCard1 = ActionCard("burner$i", "Fire.png", "burns target for $i rounds",
+            i/2, 0, 0, Array<State>(arrayOf(State("Burn", i))))
         testDeck.addCard(stateCard1)
         val stateCard2 = ActionCard("poison", "PoisonCard.png", "poisons target for $i rounds",
-            i-1, 0, 0, Array<State>(arrayOf(State("Poison", i))))
+            i/2-1, 0, 0, Array<State>(arrayOf(State("Poison", i))))
         testDeck.addCard(stateCard2)
-        i ++
+        i +=2
     }
     testDeck.shuffle()
     return testDeck
