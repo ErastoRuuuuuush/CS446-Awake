@@ -38,7 +38,7 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
     open fun drawCard(){
         if (deck.isEmpty()){
             HP = 0
-            endRound()
+            return endRound()
         }
         val c = deck.pop() // deck should shuffle when it is empty
         hand.add(c)
@@ -69,7 +69,7 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
         energy = maxEnergy
         strength = maxStrength
         drawCard()
-        for (s in state) {
+        for (s in state){
             s.apply(this)
         }
     }
@@ -80,7 +80,8 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
         }
     }
 
-    open fun endRound() {}
+    open fun endRound() {
+    }
 
     open fun postRound(){
     }

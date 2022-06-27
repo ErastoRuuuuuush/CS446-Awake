@@ -42,7 +42,6 @@ class Awake : Game() {
         enemy.updateState(State("Freeze", 3))
 
         board = Board(player, enemy)
-        print("board created")
 
 
     }

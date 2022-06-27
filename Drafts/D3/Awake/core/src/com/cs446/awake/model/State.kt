@@ -87,19 +87,19 @@ class State(val stateName: String,
     }
 
     fun apply(target: Character){
-        target.removeState(releaseList)
+        //target.removeState(releaseList)
         // check if the state can be released
 
-        if (releaseProbability > 0 && random_event(releaseProbability)) {
-            target.removeState(mutableListOf(stateName))
-            return
-        }
+        //if (releaseProbability > 0 && random_event(releaseProbability)) {
+        //    target.removeState(mutableListOf(stateName))
+        //    return
+        //}
 
         // check if player can move
         if (moveProbability == 0.0) {
-            target.endRound()
+            return target.endRound()
         } else if (moveProbability < 1.0 && !random_event(moveProbability)) {
-            target.endRound()
+            return target.endRound()
         }
 
         // damage
@@ -117,9 +117,9 @@ class State(val stateName: String,
         effectiveRound -= 1
 
         // check effective round
-        if (effectiveRound <= 0){
-            target.removeState(mutableListOf(stateName))
-        }
+        //if (effectiveRound <= 0){
+        //    target.removeState(mutableListOf(stateName))
+        //}
     }
 
 }
