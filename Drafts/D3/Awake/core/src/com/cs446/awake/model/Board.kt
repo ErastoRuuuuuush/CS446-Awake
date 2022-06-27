@@ -34,7 +34,6 @@ class Board (val player: Player,val enemy: Enemy) {
 
              */
         }
-        println("\n END GAME END GAME END GAME")
 //            // Separate function for easy maintenance and upgrade add-ons in future.
 //            currentRound++
 //            preRound()
@@ -50,9 +49,11 @@ class Board (val player: Player,val enemy: Enemy) {
 
     fun win(): Boolean? {
         if (player.isDead()) {
+            println("\n You Lose！")
             return false
         }
         if (enemy.isDead()) {
+            println("\n You Win！")
             return true
         }
         return null
