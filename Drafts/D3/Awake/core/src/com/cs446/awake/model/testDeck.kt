@@ -9,13 +9,14 @@ fun getTestDeck(): Deck {
         // make 5 - i attack cards with damage i
         var j = i
         while (j < 5) {
-            val attackCard = ActionCard(("AttackCard$i$j"),"Fire.png", "Deals $i damage after costing ${j/2} strength", 0, j/2, -i*50, Array<State>(0))
+            val attackCard = ActionCard(("AttackCard$i$j"),"Fire.png", "Deals $i damage after costing ${j/2} strength", 0, j/2, -i, Array<State>(0))
             testDeck.addCard(attackCard)
             j ++
         }
         // make a card that restores i health
-//        val restoreCard = ActionCard("RestoreCard$i", "Fire.png", "Restores $i health after costing $i energy", i,0, i, Array<State>(0))
-//        testDeck.addCard(restoreCard)
+
+/*        val restoreCard = ActionCard("RestoreCard$i", "Heal.png", "Restores $i health after costing $i energy", i,0, (0-i), Array<State>(0))
+        testDeck.addCard(restoreCard)*/
         i ++
     }
     // make some state cards

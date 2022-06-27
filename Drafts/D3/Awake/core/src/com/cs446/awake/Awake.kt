@@ -33,7 +33,7 @@ class Awake : Game() {
         val imgs = Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png"))
 
         val enemyStates : MutableList<State> = mutableListOf()
-        val enemy = Enemy(imgs,"Enemy",999, 99, 99, deck2, enemyStates, PlayerType.AI)
+        val enemy = Enemy(imgs,"Enemy",10, 99, 99, deck2, enemyStates, PlayerType.AI)
 
         board = Board(player, enemy)
         print("board created")

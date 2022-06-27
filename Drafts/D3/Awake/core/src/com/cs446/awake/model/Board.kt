@@ -28,6 +28,7 @@ class Board (val player: Player,val enemy: Enemy) {
         if (win() == null) {
             current.preRound()
             currentRound++
+            println ("current round $currentRound")
             /*
             if (currentRound % 2 == 1) preRound()
 

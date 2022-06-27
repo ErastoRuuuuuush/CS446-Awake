@@ -33,6 +33,7 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
                 updateState(s)
             }
         }
+        println("health $HP")
     }
 
     fun selectRamdomCard(): ActionCard {
