@@ -45,6 +45,9 @@ class BattleScreen(private val board: Board) : BaseScreen(){
         enemy.moveBy(0f, -550f)
 
         stage.addActor(board.enemy.healthBar)
+        stage.addActor(board.player.healthBar)
+        stage.addActor(board.player.strengthBar)
+        stage.addActor(board.player.energyBar)
 
 
         val stateImg = Texture("burn.png")
@@ -59,7 +62,7 @@ class BattleScreen(private val board: Board) : BaseScreen(){
             board.player.characterStateMap[state] = stateActor
 
             stateActor.loadTexture(state.lowercase() + ".png")
-            stateActor.centerAtPosition(-800f, height - 1000f)
+            stateActor.centerAtPosition(-900f, height - 1000f)
             stateActor.moveBy(
                 (wid - (4 * stateWidth + 3 * intervalWid)) / 2 + stateIndex * stateWidth,
                 0f
@@ -108,8 +111,7 @@ class BattleScreen(private val board: Board) : BaseScreen(){
                     pointer: Int,
                     button: Int
                 ): Boolean {
-                    board.postRound()
-                    board.switchTurn()
+                    board.endRound()
                     endTurnActor.remove()
                     return true
                 }
@@ -190,8 +192,7 @@ class BattleScreen(private val board: Board) : BaseScreen(){
                 ): Boolean {
                     board.activeAI()
                     textButton.remove()
-                    board.postRound()
-                    board.switchTurn()
+                    board.endRound()
                     return true
                 }
             })
@@ -217,8 +218,9 @@ class BattleScreen(private val board: Board) : BaseScreen(){
                 button: Int
             ): Boolean {
                 textButton.remove()
-                board.startRound()
-                board.enemy.initHealthBar()
+                board.startGame()
+                board.enemy.initBars()
+                board.player.initBars()
 
                 startGame()
                 return true

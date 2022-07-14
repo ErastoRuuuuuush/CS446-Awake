@@ -11,12 +11,11 @@ import com.badlogic.gdx.utils.Array
 
 
 class Enemy(val images: Array<String?>, charName: String, HP: Int, energy: Int, strength: Int, deck: Deck, state: MutableList<State>, playerType: PlayerType) : Character(charName, HP, energy, strength, deck, state, playerType) {
-    lateinit var healthBar : ProgressBar
 
-    fun initHealthBar() {
+    override fun initBars() {
         // bar background as red
-        var pixmap = Pixmap(100, 20, Pixmap.Format.RGBA8888)
-        pixmap.setColor(Color.RED)
+        var pixmap = Pixmap(100, 15, Pixmap.Format.RGBA8888)
+        pixmap.setColor(Color.BLACK)
         pixmap.fill()
         var drawable = TextureRegionDrawable(TextureRegion(Texture(pixmap)))
         pixmap.dispose()
@@ -24,15 +23,15 @@ class Enemy(val images: Array<String?>, charName: String, HP: Int, energy: Int, 
         progressBarStyle.background = drawable
 
         // health as green
-        pixmap = Pixmap(0, 20, Pixmap.Format.RGBA8888)
-        pixmap.setColor(Color.GREEN)
+        pixmap = Pixmap(0, 15, Pixmap.Format.RGBA8888)
+        pixmap.setColor(Color.RED)
         pixmap.fill()
         drawable = TextureRegionDrawable(TextureRegion(Texture(pixmap)))
         pixmap.dispose()
         progressBarStyle.knob = drawable
 
-        pixmap = Pixmap(100, 20, Pixmap.Format.RGBA8888)
-        pixmap.setColor(Color.GREEN)
+        pixmap = Pixmap(100, 15, Pixmap.Format.RGBA8888)
+        pixmap.setColor(Color.RED)
         pixmap.fill()
         drawable = TextureRegionDrawable(TextureRegion(Texture(pixmap)))
         pixmap.dispose()
@@ -42,14 +41,8 @@ class Enemy(val images: Array<String?>, charName: String, HP: Int, energy: Int, 
         healthBar = ProgressBar(0.0f, 1.0f, 0.01f, false, progressBarStyle)
         healthBar.value = 1.0f
         healthBar.setAnimateDuration(0.25f)
-        healthBar.setBounds(500F, 1000F, 1000F, 20F)
+        healthBar.setBounds(500F, 1000F, 1200F, 15F)
         healthBar.setRange(0f, HP / 100.0f) // TODO: everytime deal damage, update this
         healthBar.value = HP / 100.0f
-    }
-
-    override fun updateHealth(HpChange: Int){
-        HP += HpChange
-        healthBar.value = HP / 100f
-        println(charName + " remaining health " + HP.toString())
     }
 }

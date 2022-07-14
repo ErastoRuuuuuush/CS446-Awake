@@ -15,8 +15,8 @@ fun getTestDeck(): Deck {
         }
         // make a card that restores i health
 
-/*        val restoreCard = ActionCard("RestoreCard$i", "Heal.png", "Restores $i health after costing $i energy", i,0, (0-i), Array<State>(0))
-        testDeck.addCard(restoreCard)*/
+        val restoreCard = ActionCard("RestoreCard$i", "Heal.png", "Restores $i health after costing $i energy", i,0, i, Array<State>(0))
+        testDeck.addCard(restoreCard)
         i ++
     }
     // make some state cards
@@ -26,7 +26,7 @@ fun getTestDeck(): Deck {
             i, 0, 0, Array<State>(arrayOf(State("Burn", i))))
         testDeck.addCard(stateCard1)
         val stateCard2 = ActionCard("poison", "PoisonCard.png", "poisons target for $i rounds",
-            i-1, 0, 0, Array<State>(arrayOf(State("Poison", i))))
+            i-1, 0, 0, Array<State>(arrayOf(State("Poison", i), State("Sleep", i))))
         testDeck.addCard(stateCard2)
         i ++
     }

@@ -25,6 +25,8 @@ class Board (val player: Player,val enemy: Enemy) {
 
     fun startGame() {
         print("game started")
+        current.setBoard(this)
+        target.setBoard(this)
         if (win() == null) {
             startRound()
         }
@@ -89,7 +91,10 @@ class Board (val player: Player,val enemy: Enemy) {
         }
     }
 
-    private fun endRound(){}
+    fun endRound(){
+        postRound()
+        switchTurn()
+    }
 
     fun postRound() {
         current.postRound()

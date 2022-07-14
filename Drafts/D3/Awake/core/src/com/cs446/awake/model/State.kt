@@ -97,9 +97,9 @@ class State(val stateName: String,
 
         // check if player can move
         if (moveProbability == 0.0) {
-            return target.endRound()
+            target.endRound()
         } else if (moveProbability < 1.0 && !random_event(moveProbability)) {
-            return target.endRound()
+            target.endRound()
         }
 
         // damage
