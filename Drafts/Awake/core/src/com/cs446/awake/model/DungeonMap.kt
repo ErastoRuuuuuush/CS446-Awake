@@ -23,10 +23,9 @@ class DungeonMap(val level: Int) {
                     eventRow.add(Event("Attack.png", "Heal.png"))
                     continue
                 }
-                // The last is always empty
+                // The last is always empty exit for next level
                 if (row == rownum && col == colnum){
                     eventRow.add(Event("Attack.png", "Heal.png"))
-                    println("BOSS before next room")
                     continue
                 }
                 // randomize between battle, item, or empty
@@ -47,11 +46,14 @@ class DungeonMap(val level: Int) {
 
     // check if going to a coordinate is allowed
     fun canGo(row: Int, col: Int): Boolean {
+        // if out of map or no step left then return false
         if (col > colnum || col < 0 || row > rownum || row < 0 || stepsLeft <= 0) return false
+        // if one of its four neighbours is flipped, the return true
         if (col < colnum && map[row][col+1].isFlipped()) return true
         if (col > 0 && map[row][col-1].isFlipped()) return true
         if (row < rownum && map[row+1][col].isFlipped()) return true
         if (row > 0 && map[row-1][col].isFlipped()) return true
+        // other wise default false
         return false
     }
 
