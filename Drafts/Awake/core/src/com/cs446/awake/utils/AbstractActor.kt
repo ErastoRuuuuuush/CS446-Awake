@@ -85,7 +85,8 @@ abstract class AbstractActor(x: Float, y: Float, s: Stage, texture: Texture? = n
         }
         val anim: Animation<TextureRegion> = Animation<TextureRegion>(frameDuration, textureArray)
         if (loop) anim.setPlayMode(Animation.PlayMode.LOOP) else anim.setPlayMode(Animation.PlayMode.NORMAL)
-        if (animation == null) setAnimation(anim)
+        // if (animation == null) setAnimation(anim)  // ERIC: removed this so can change pic during runtime.
+        setAnimation(anim)
         return anim
     }
 
