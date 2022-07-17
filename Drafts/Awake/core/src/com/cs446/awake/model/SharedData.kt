@@ -11,7 +11,7 @@ public var player: Player? = null
 // the materials that the player collects
 public var backPackMaterial : Array<MaterialCard> = Array<MaterialCard>()
 // the weapons that player bring into dungeon
-public var backPackWeapon : Array<MaterialCard> = Array<MaterialCard>()
+public var backPackItem : Array<ItemCard> = Array<ItemCard>()
 
 
 // Info

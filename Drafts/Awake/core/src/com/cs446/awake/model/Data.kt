@@ -6,7 +6,7 @@ abstract class Data {
     abstract fun getStored(): Array<Any>;
     open fun randomSelect(): Any? {
         val all : Array<Any> = getStored();
-        val rad = (0..all.size).random()
+        val rad = (0..all.size-1).random()
         return all[rad]
     }
 }

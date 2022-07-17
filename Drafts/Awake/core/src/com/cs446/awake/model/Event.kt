@@ -13,7 +13,8 @@ open class Event(val backImg: String, val FrontImg: String) {
     fun isFlipped(): Boolean {
         return flipped
     }
-    open fun trigger(){
+    open fun trigger() : Int {
         flipped = true
+        return 1
     }
 }
