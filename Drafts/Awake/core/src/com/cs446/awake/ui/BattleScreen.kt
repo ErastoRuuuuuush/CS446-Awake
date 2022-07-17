@@ -33,7 +33,7 @@ import com.cs446.awake.utils.*
 //   4. endTurn
 //   5. Loop from 3. If End Game, jump to 6.
 //   6. End Game / Exit Screen
-class BattleScreen(val player: Player,val enemy: Enemy) : BaseScreen(){
+class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseScreen(){
     //// Variable of position related
     // Size of the entire screen
     private val screenWidth = Gdx.graphics.width.toFloat()

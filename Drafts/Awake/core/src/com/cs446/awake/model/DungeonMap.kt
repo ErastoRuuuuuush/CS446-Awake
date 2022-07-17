@@ -26,6 +26,7 @@ class DungeonMap(val level: Int) {
                 // The last is always empty
                 if (row == rownum && col == colnum){
                     eventRow.add(Event("Attack.png", "Heal.png"))
+                    println("BOSS before next room")
                     continue
                 }
                 // randomize between battle, item, or empty
