@@ -11,6 +11,6 @@ class BattleEvent (backImg: String, frontImg: String, val monster: Monster) : Ev
         val deck = getTestDeck()
         val playerStates : MutableList<State> = mutableListOf()
         player = Player("Hero",300, 10, 10, deck, playerStates, PlayerType.Human)
-        return 3
+        return BATTLE
     }
 }

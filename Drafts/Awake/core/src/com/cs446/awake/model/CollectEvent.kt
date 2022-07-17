@@ -5,6 +5,6 @@ class CollectEvent (backImg: String, frontImg: String, val material: MaterialCar
     override fun trigger() : Int {
         super.trigger()
         backPackMaterial.add(material)
-        return 2
+        return COLLECT
     }
 }

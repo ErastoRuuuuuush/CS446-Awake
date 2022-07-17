@@ -15,6 +15,6 @@ open class Event(val backImg: String, val FrontImg: String) {
     }
     open fun trigger() : Int {
         flipped = true
-        return 1
+        return EMPTY
     }
 }
