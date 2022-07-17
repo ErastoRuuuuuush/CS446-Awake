@@ -2,13 +2,17 @@ package com.cs446.awake.model
 
 import com.badlogic.gdx.utils.Array
 
+// information about the player pregress
 // Todo: read from file
 // the current Enemy in battle
 public var enemy : Enemy? = null
 // the current Player in battle
 public var player: Player? = null
-
-// the materials that the player collects
+// the dungeon level that the player is at
+public var dungeonLevel : Int = 1
+// the storage of a player in village
+public var storage: CardData = CardData(mutableListOf())
+// the materials that the player collects in dungeon
 public var backPackMaterial : CardData = CardData(mutableListOf())
 // the weapons that player bring into dungeon
 public var backPackItem : CardData = CardData(mutableListOf())

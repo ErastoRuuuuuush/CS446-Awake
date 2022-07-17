@@ -34,18 +34,15 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
 
     // remove a card.
     override fun remove(card: MergableCard){
-        var removed: MergableCard? = null
         // if card with same name already exists, update
         for (existingCard in list){
             if (card.cardName == existingCard.cardName){
                 var changedAmount = existingCard.count
-                // if more than the removed amount, then subtract the amount
-                if (changedAmount < existingCard.count ){
-                    existingCard.count -= changedAmount
-                } else { // remove this card entirely from the list
+                // if more than the existing amount, remove all
+                if (changedAmount > existingCard.count){
                     changedAmount = existingCard.count
-                    removed = existingCard
                 }
+                existingCard.count -= changedAmount
                 // update sum of elements
                 wood += card.wood * changedAmount
                 fire += card.fire * changedAmount
@@ -57,7 +54,6 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
                 break
             }
         }
-        list.remove(removed)
     }
 
 

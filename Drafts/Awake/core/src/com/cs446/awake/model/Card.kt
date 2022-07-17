@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.Array
 
 
-open class Card(val cardName: String, val img: String, val usage: String, var count: Int = 1) {
+open class Card(val cardName: String, val img: String, val usage: String = "", var count: Int = 1) {
 
     open fun use() {}
 }
