@@ -1,9 +1,10 @@
 package com.cs446.awake.model
 
 // material cards that could be collected
-class MaterialCard (cardName: String, img: String, usage: String,
-                    val wood: Int = 0, val fire: Int = 0, val earth: Int = 0, val metal: Int = 0,
-                    val water: Int = 0, val electric: Int = 0, val wind : Int = 0 ) : Card(cardName, img, usage)
+class MaterialCard (cardName: String, img: String, usage: String, count: Int = 1,
+                    wood: Int = 0, fire: Int = 0, earth: Int = 0, metal: Int = 0,
+                    water: Int = 0, electric: Int = 0, wind : Int = 0 ):
+    MergableCard(cardName, img, usage, count, wood, fire, earth, metal, water, electric, wind)
 {
 
 }
