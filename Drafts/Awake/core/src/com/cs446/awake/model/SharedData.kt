@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array
 import java.io.FileReader
 //import com.google.gson.Gson
 
+
 // information about the player progress
 // Todo: read from file
 // the current Enemy in battle
