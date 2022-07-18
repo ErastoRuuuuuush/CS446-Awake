@@ -26,12 +26,12 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
         // if card with same name already exists, just add up the count
         for (existingCard in list){
             if (card.cardName == existingCard.cardName){
-                card.count += existingCard.count
+                existingCard.count += card.count
                 return
             }
         }
         // else just add the card
-        super.add(card)
+        super.add(card.clone())
     }
 
     // remove a card.
