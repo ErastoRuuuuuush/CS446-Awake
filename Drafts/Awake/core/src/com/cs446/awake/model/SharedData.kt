@@ -1,13 +1,17 @@
 package com.cs446.awake.model
 
 import com.badlogic.gdx.utils.Array
+import java.io.FileReader
+//import com.google.gson.Gson
 
-// information about the player pregress
+// information about the player progress
 // Todo: read from file
 // the current Enemy in battle
 public var enemy : Enemy? = null
 // the current Player in battle
 public var player: Player? = null
+// the deck of player
+public var deck : Deck = Deck()
 // the dungeon level that the player is at
 public var dungeonLevel : Int = 1
 // the storage of a player in village
@@ -17,6 +21,9 @@ public var backPackMaterial : CardData = CardData(mutableListOf())
 // the weapons that player bring into dungeon
 public var backPackItem : CardData = CardData(mutableListOf())
 
+// create json from class
+var map = mapOf("storage" to storage, "dungeonLevel" to dungeonLevel)
+//val json = gson.toJson(map)
 
 // constants for dungeon moves
 public val INVALIDMOVE = 0

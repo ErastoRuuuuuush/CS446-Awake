@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.cs446.awake.model.DungeonMap
+import com.cs446.awake.model.INVALIDMOVE
 import com.cs446.awake.utils.BaseActor
 import com.cs446.awake.utils.BaseScreen
 
@@ -124,7 +125,7 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
                         button: Int
                     ): Boolean {
                         if (map.map[row][column].isFlipped()) return true
-                        if (map.go(row, column)) {
+                        if (map.go(row, column) != INVALIDMOVE) {
                             card.loadTexture(map.map[row][column].frontImg)
                             card.height = card.width
                         }

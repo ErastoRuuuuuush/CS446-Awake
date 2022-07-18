@@ -133,3 +133,6 @@ Drafts/D3/Awake/local.properties
 
 #local.properties
 Drafts/Awake/local.properties
+
+#build
+Drafts/Awake/core/build/*

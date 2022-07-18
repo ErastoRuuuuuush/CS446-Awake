@@ -6,11 +6,12 @@ class BattleEvent (backImg: String, frontImg: String, val monster: Monster) : Ev
         super.trigger()
         val monsterDeck = monster.getDeck()
         enemy = Enemy(monster.images, monster.charName, monster.getHP(), monster.getEnergy(), monster.getStrength(), monsterDeck, mutableListOf(), PlayerType.AI)
-
-        // for sake of test only, hard code player
-        val deck = getTestDeck()
-        val playerStates : MutableList<State> = mutableListOf()
-        player = Player("Hero",300, 10, 10, deck, playerStates, PlayerType.Human)
+        // generate new player deck according to the items in backpack
+        deck = Deck()
+        for (item in backPackItem.getStored()){
+            item.use()
+        }
+        player = Player("Hero",300, 10, 10, deck, mutableListOf(), PlayerType.Human)
         return BATTLE
     }
 }
