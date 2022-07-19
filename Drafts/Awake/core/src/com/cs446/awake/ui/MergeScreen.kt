@@ -39,9 +39,43 @@ class MergeScreen() : BaseScreen() {
     // List store card actors
     private val mergeAreaCards = ArrayList<DragDropActor>()
 
+    private var changeX = 0f
+    private var toMerge = false
     // Split Pane that contains Merge Area at the top and Material Table at the bottom
     //private lateinit var splitPane : SplitPane
 
+    // Timer variables
+    private var worldTimer  = -1
+    private var activeTimer = false
+    private val timerLimit = 10 // Not 0 in case of concurrency issue.
+    private var endTimeFcn : () -> Unit = {} // lambda function about what to do when time ends
+    private var duringTimeFcn : () -> Unit = {} // lambda function about what to do when each frame passed.
+
+
+    // Function that active the timer
+    private fun startTimer(frames: Int, endTime : () -> Unit, duringTime : () -> Unit) {
+        endTimeFcn = endTime
+        duringTimeFcn = duringTime
+        worldTimer = frames
+        activeTimer = true
+    }
+
+    // Function that count down the timer. Stop timer when time ends.
+    private fun runTimer() {
+        if (activeTimer) {
+            if (worldTimer <= timerLimit) {
+                // Time up
+                activeTimer = false
+                endTimeFcn()
+            } else {
+                // During count down
+                duringTimeFcn()
+                worldTimer--
+            }
+        }
+    }
+
+    /*
     private fun generateDragDrop(material: MergableCard, tableActor: BaseActor, cardStack: Stack) {
         val cardActor = DragDropActor(0f, 0f, stage, mergeDisplay, inTable = true)
         cardActor.toFront()
@@ -79,6 +113,8 @@ class MergeScreen() : BaseScreen() {
         }
     }
 
+     */
+
     private fun renderTable() {
         materialTable.clear()
         for (material in materials) {
@@ -97,25 +133,40 @@ class MergeScreen() : BaseScreen() {
                 cardActor.loadTexture("PoisonCard.png") //TODO: read card image & info
                 // if not on the merge area, return back to the start position
                 cardActor.setOnDropNoIntersect {
+                    toMerge = false
                     cardActor.setPosition(cardActor.startX, cardActor.startY)
                 }
                 // if on the merge area, update merge list and storage
                 cardActor.setOnDropIntersect {
-                    val oneMaterial: MergableCard = material.clone()
-                    oneMaterial.count = 1
+                    toMerge = false
+                    if (!mergeAreaCards.contains(cardActor)){
+                        val oneMaterial: MergableCard = material.clone()
+                        oneMaterial.count = 1
 
-                    mergeData.add(oneMaterial)
-                    storage.remove(oneMaterial)
-                    println("Merge Area:")
-                    for (i in mergeData.getStored()) {
-                        println(i.cardName + " " + i.count.toString())
-                    }
-                    println("Storage:")
-                    for (i in storage.getStored()) {
-                        println(i.cardName + " " + i.count.toString())
-                    }
+                        mergeData.add(oneMaterial)
+                        storage.remove(oneMaterial)
+                        println("Merge Area:")
+                        for (i in mergeData.getStored()) {
+                            println(i.cardName + " " + i.count.toString())
+                        }
+                        println("Storage:")
+                        for (i in storage.getStored()) {
+                            println(i.cardName + " " + i.count.toString())
+                        }
 
-                    mergeAreaCards.add(cardActor)
+                        mergeAreaCards.add(cardActor)
+                    }
+                }
+
+                // controls drag card or swipe table
+                cardActor.setOnDragNoIntersect {
+                    if (!toMerge) {
+                        changeX = cardActor.x - cardActor.startX
+                        tableDisplay.setPosition(tableDisplay.x + changeX, tableDisplay.y)
+                    }
+                }
+                cardActor.setOnDragIntersect {
+                    toMerge = true
                 }
                 cardStack.add(cardActor)
                 count--
@@ -183,12 +234,19 @@ class MergeScreen() : BaseScreen() {
                     val outputCardActor = BaseActor(0f, 0f, stage)
                     outputCardActor.toFront()
                     outputCardActor.loadTexture("skeleton1.png") //TODO: read card image & info
-                    // TODO: remove card after several seconds
+
 
                     mergeAreaCards.clear()
 
                     // refresh table
                     renderTable()
+
+                    // remove card after several seconds
+                    val duringTime : () -> Unit = { outputCardActor.setOpacity(worldTimer / 60f) }
+                    val endTime : () -> Unit = {
+                        outputCardActor.remove()
+                    }
+                    startTimer(180, endTime, duringTime) // about 3 seconds
                 } else {
                     println("Invalid Merge")
                 }
@@ -224,12 +282,10 @@ class MergeScreen() : BaseScreen() {
                 return true
             }
         })
-
-        //splitPane = SplitPane(mergeDisplay, tableDisplay, true, skin)
     }
 
     override fun update(delta: Float) {
-
+        runTimer()
     }
 
 }
