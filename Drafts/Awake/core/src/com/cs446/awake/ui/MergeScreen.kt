@@ -235,8 +235,8 @@ class MergeScreen() : BaseScreen() {
                     outputCardActor.toFront()
                     outputCardActor.loadTexture("skeleton1.png") //TODO: read card image & info
 
-
                     mergeAreaCards.clear()
+                    mergeData = CardData(mutableListOf())
 
                     // refresh table
                     renderTable()
