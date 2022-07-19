@@ -129,7 +129,7 @@ Thumbs.db
 /android/assets/player.json
 
 #local.properties
-*/local.properties
+**/local.properties
 
 #build
-Drafts/Awake/core/build/*
+**/build/

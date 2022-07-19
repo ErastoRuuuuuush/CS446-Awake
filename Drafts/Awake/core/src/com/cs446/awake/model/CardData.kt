@@ -65,13 +65,13 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
         var validList = CardData(mutableListOf<MergableCard>())
         for (item in possilbeOutcomes.getStored()){
             // be a candidate if all element fields are satisfied
-            if (item.earth >= max(inputList.earth,0)
-                && item.fire >= max(inputList.fire ,0)
-                && item.metal >= max(inputList.metal,0)
-                && item.electric >= max(inputList.electric,0)
-                && item.water >= max(inputList.water,0)
-                && item.wood >= max(inputList.wood,0)
-                && item.wind >= max(inputList.wind,0)){
+            if (item.earth <= max(inputList.earth,0)
+                && item.fire <= max(inputList.fire ,0)
+                && item.metal <= max(inputList.metal,0)
+                && item.electric <= max(inputList.electric,0)
+                && item.water <= max(inputList.water,0)
+                && item.wood <= max(inputList.wood,0)
+                && item.wind <= max(inputList.wind,0)){
                 validList.add(item)
             }
         }
