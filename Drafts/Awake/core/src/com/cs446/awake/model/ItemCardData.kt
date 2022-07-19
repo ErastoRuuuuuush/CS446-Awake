@@ -23,6 +23,12 @@ class ItemCardData (cardList: MutableList<ItemCard>): CardData(cardList as Mutab
         return null
     }
 
+    // remove a card.
+    override fun remove(card: MergableCard){
+        if (card is ItemCard) super.remove(card)
+        println("trying to remove a non-item from deck")
+    }
+
     override fun getBelowLevel(level: Int): ItemCard? {
         return super.getBelowLevel(level) as ItemCard
     }
