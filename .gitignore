@@ -128,11 +128,8 @@ Thumbs.db
 # - save file
 /android/assets/player.json
 
-# D3
-Drafts/D3/Awake/local.properties
-
 #local.properties
-Drafts/Awake/local.properties
+*/local.properties
 
 #build
 Drafts/Awake/core/build/*

@@ -1,5 +1,7 @@
 package com.cs446.awake.model
 
+import java.lang.Integer.max
+
 class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardList){
     // the sum of all element in the list
     var wood: Int = 0
@@ -24,12 +26,12 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
         // if card with same name already exists, just add up the count
         for (existingCard in list){
             if (card.cardName == existingCard.cardName){
-                card.count += existingCard.count
+                existingCard.count += card.count
                 return
             }
         }
         // else just add the card
-        super.add(card)
+        super.add(card.clone())
     }
 
     // remove a card.
@@ -37,7 +39,7 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
         // if card with same name already exists, update
         for (existingCard in list){
             if (card.cardName == existingCard.cardName){
-                var changedAmount = existingCard.count
+                var changedAmount = card.count
                 // if more than the existing amount, remove all
                 if (changedAmount > existingCard.count){
                     changedAmount = existingCard.count
@@ -59,18 +61,22 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
 
     // merge materials or items to get a new item
     // possilbeOutcomes should be all item cards, in particular, our global variable itemInfo
-    fun merge(inputList: CardData, possilbeOutcomes: CardData): ItemCard{
+    fun merge(inputList: CardData, possilbeOutcomes: CardData): ItemCard?{
         var validList = CardData(mutableListOf<MergableCard>())
         for (item in possilbeOutcomes.getStored()){
             // be a candidate if all element fields are satisfied
-            if (item.earth >= inputList.earth && item.fire >= inputList.fire && item.metal >= inputList.metal
-                && item.electric >= inputList.electric && item.water >= inputList.water
-                && item.wood >= inputList.wood && item.wind >= inputList.wind){
+            if (item.earth >= max(inputList.earth,0)
+                && item.fire >= max(inputList.fire ,0)
+                && item.metal >= max(inputList.metal,0)
+                && item.electric >= max(inputList.electric,0)
+                && item.water >= max(inputList.water,0)
+                && item.wood >= max(inputList.wood,0)
+                && item.wind >= max(inputList.wind,0)){
                 validList.add(item)
             }
         }
         // select a random one
-        return validList.randomSelect() as ItemCard
+        return validList.randomSelect() as ItemCard?
     }
 
 

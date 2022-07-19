@@ -1,5 +1,7 @@
 package com.cs446.awake.model
 
+import com.google.gson.Gson
+
 
 open class Data<T> (var list: MutableList<T>){
     // add an element into the list

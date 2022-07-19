@@ -49,6 +49,7 @@ project(":android") {
     configurations { natives }
 
     dependencies {
+        implementation 'com.google.code.gson:gson:2.8.5'
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"

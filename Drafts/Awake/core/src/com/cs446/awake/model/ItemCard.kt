@@ -1,5 +1,7 @@
 package com.cs446.awake.model
 
+import com.google.gson.Gson
+
 class ItemCard (cardName: String, img: String, usage: String, wood: Int = 0,
                  fire: Int = 0, earth: Int = 0, metal: Int = 0, water: Int = 0,
                  electric: Int = 0, wind : Int = 0, var actionCards: Deck, count: Int = 1):
@@ -16,5 +18,10 @@ class ItemCard (cardName: String, img: String, usage: String, wood: Int = 0,
                 deck.addCard(copyCard)
             }
         }
+    }
+    // create a clone (deep copy) of the data
+    override fun clone(): ItemCard{
+        val stringItem = Gson().toJson(this, ItemCard::class.java)
+        return Gson().fromJson<ItemCard>(stringItem, ItemCard::class.java)
     }
     }

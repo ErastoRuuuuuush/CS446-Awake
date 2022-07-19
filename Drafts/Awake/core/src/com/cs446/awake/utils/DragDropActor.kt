@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.scenes.scene2d.*
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 
-class DragDropActor(x: Float, y: Float, s: Stage, dropTarget: AbstractActor) : AbstractActor(x, y, s){
+class DragDropActor(x: Float, y: Float, s: Stage, dropTarget: AbstractActor, inTable: Boolean? = false) : AbstractActor(x, y, s, inTable = inTable){
     val self: DragDropActor = this
 
     private var onDragIntersect : () -> Unit = {}

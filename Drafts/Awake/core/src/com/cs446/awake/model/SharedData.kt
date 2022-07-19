@@ -34,6 +34,19 @@ public val BATTLE = 3
 public val NEXTLEVEL = 4
 
 // Info
+// ActionCards
+val stickStrike : ActionCard = ActionCard("strike", "skeleton1.png",
+    "deals 5 damage cost 1 energy", 1, 0, -5, Array<State>(), 5)
+
+// Items
+val stick : ItemCard = ItemCard("stick", "skeleton1.png", "a simple weapon",
+    10, actionCards = Deck(Array<ActionCard>(arrayOf(stickStrike))))
+public var itemInfo: CardData = CardData(mutableListOf(stick))
+
+// materials
+val stone : MaterialCard = MaterialCard("stone","skeleton1.png", "a stone", earth = 5, metal = 2, water = -2)
+val log : MaterialCard = MaterialCard("log", "skeleton1.png", "a log", wood = 5, fire = 2, earth = -2)
+public var materialInfo : CardData = CardData(mutableListOf(stone, log))
+
 public var monsterInfo : MonsterData = MonsterData(mutableListOf((Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 1, "Enemy"))))
-public var materialInfo : CardData = CardData(mutableListOf(MaterialCard("rock", "rock", "a rock")))
-public var itemInfo: CardData = CardData(mutableListOf())
+

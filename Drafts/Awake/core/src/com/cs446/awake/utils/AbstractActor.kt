@@ -13,8 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.Array
 
 
-abstract class AbstractActor(x: Float, y: Float, s: Stage, texture: Texture? = null
-) : Actor() {
+abstract class AbstractActor(x: Float, y: Float, s: Stage, texture: Texture? = null, inTable: Boolean? = false) : Actor() {
     var bound: Rectangle = Rectangle()
     private var animation: Animation<TextureRegion>? = null
     private var elapsedTime = 0f
@@ -27,7 +26,9 @@ abstract class AbstractActor(x: Float, y: Float, s: Stage, texture: Texture? = n
 
     init {
         setPosition(x, y)
-        s.addActor(this)
+        if (inTable != true) {
+            s.addActor(this)
+        }
         bound = Rectangle(x,y, width, height)
     }
 
