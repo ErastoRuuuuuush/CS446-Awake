@@ -19,7 +19,9 @@ class MergeScreen() : BaseScreen() {
     private lateinit var background : BaseActor
 
     // Merge Area
-    private lateinit var mergeDisplay : BaseActor
+    private lateinit var mergeArea : BaseActor
+    private var mergeDisplay = Container<Table>()
+    private val mergeTable = Table()
 
     // Merge Button
     private lateinit var mergeCard : BaseActor
@@ -116,6 +118,7 @@ class MergeScreen() : BaseScreen() {
      */
 
     private fun renderTable() {
+        mergeTable.clear()
         materialTable.clear()
         for (material in materials) {
             val cardStack = Stack()
@@ -128,7 +131,7 @@ class MergeScreen() : BaseScreen() {
             }
             var count = material.count
             while (count > 0) {
-                val cardActor = DragDropActor(0f, 0f, stage, mergeDisplay, inTable = true)
+                val cardActor = DragDropActor(0f, 0f, stage, mergeArea, inTable = true)
                 cardActor.toFront()
                 cardActor.loadTexture("PoisonCard.png") //TODO: read card image & info
                 // if not on the merge area, return back to the start position
@@ -139,7 +142,10 @@ class MergeScreen() : BaseScreen() {
                 // if on the merge area, update merge list and storage
                 cardActor.setOnDropIntersect {
                     toMerge = false
-                    if (!mergeAreaCards.contains(cardActor)){
+                    if (mergeAreaCards.size >= 7) {
+                        cardActor.setPosition(cardActor.startX, cardActor.startY)
+                    }
+                    else if (!mergeAreaCards.contains(cardActor)){
                         val oneMaterial: MergableCard = material.clone()
                         oneMaterial.count = 1
 
@@ -154,7 +160,12 @@ class MergeScreen() : BaseScreen() {
                             println(i.cardName + " " + i.count.toString())
                         }
 
+                        cardStack.removeActor(cardActor)
                         mergeAreaCards.add(cardActor)
+                        val newCard = BaseActor(0f, 0f, stage, inTable = true)
+                        newCard.toFront()
+                        newCard.loadTexture("PoisonCard.png")
+                        mergeTable.add(newCard).expandX().pad(10f).right()
                     }
                 }
 
@@ -176,16 +187,25 @@ class MergeScreen() : BaseScreen() {
         }
         tableDisplay.actor = materialTable
         stage.addActor(tableDisplay)
+
+        mergeDisplay.actor = mergeTable
+        stage.addActor(mergeDisplay)
+        tableDisplay.toFront()
     }
 
     override fun initialize() {
         // test data
         storage.add(stone)
         storage.add(stone)
+        storage.add(stone)
+        storage.add(stone)
         storage.add(log)
         storage.add(log)
         storage.add(log)
-        tableDisplay.setSize(screenWidth, screenHeight - 500)
+        storage.add(log)
+        storage.add(log)
+
+        tableDisplay.setSize(screenWidth, screenHeight/2)
         tableDisplay.setPosition(0f,screenHeight -1000 )
         println("Init Storage:")
         for (i in storage.getStored()) {
@@ -202,10 +222,13 @@ class MergeScreen() : BaseScreen() {
         background.centerAtPosition(screenWidth / 2, screenHeight / 2)
 
         // set merge area
-        mergeDisplay = BaseActor(0f, 0f, stage)
-        mergeDisplay.loadTexture("transparent.png") //TODO: transparent merge area
-        mergeDisplay.setSize(screenWidth, screenHeight / 2)
-        mergeDisplay.centerAtPosition(screenWidth / 2, screenHeight * 3 / 4)
+        mergeDisplay.setSize(screenWidth, screenHeight/2)
+        mergeDisplay.setPosition(0f,screenHeight -600 )
+        mergeArea = BaseActor(0f, 0f, stage)
+        mergeArea.toFront()
+        mergeArea.loadTexture("transparent.png") //TODO: transparent merge area
+        mergeArea.setSize(screenWidth, screenHeight / 2)
+        mergeArea.centerAtPosition(screenWidth / 2, screenHeight * 3 / 4)
 
         // init table
         renderTable()
