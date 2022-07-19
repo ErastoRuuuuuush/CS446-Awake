@@ -211,6 +211,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         } else {
             enemy.preRound()
         }
+
         // Give card to player for player's turn
         if (currentTurn == player) {
             renderCard()

@@ -95,13 +95,62 @@ public const val NEXTLEVEL = 4
 
 // Info
 // ActionCards
-val stickStrike : ActionCard = ActionCard("strike", "skeleton1.png",
-    "deals 5 damage cost 1 energy", 1, 0, -5, Array<State>(), 5)
+val stickStrike : ActionCard = ActionCard("stickStrike", "skeleton1.png",
+    "", 1, 0, -5, Array<State>(), 5)
+val stoneSwordChop : ActionCard = ActionCard("stoneSwordChop", "skeleton1.png",
+    "", 2, 0, -10, Array<State>(), 5)
+val stoneSwordStab : ActionCard = ActionCard("stoneSwordStab", "skeleton1.png",
+    "", 1, 0, -5, Array<State>(), 5)
+val stoneAxChop : ActionCard = ActionCard("stoneAxChop", "skeleton1.png",
+    "", 2, 0, -12, Array<State>(), 5)
+val stoneAxStrike : ActionCard = ActionCard("stoneAxStrike", "skeleton1.png",
+    "", 3, 0, -8,
+    Array<State>(arrayOf(State("Paralysis", 1))), 5)
+val archery : ActionCard = ActionCard("archery", "skeleton1.png",
+    "", 2, 0, -12, Array<State>(), 5)
+val ironAxChop : ActionCard = ActionCard("ironAxChop", "skeleton1.png",
+    "", 2, 0, -20, Array<State>(), 5)
+val ironAxStrike : ActionCard = ActionCard("ironAxStrike", "skeleton1.png",
+    "", 3, 0, -15,
+    Array<State>(arrayOf(State("Paralysis", 2))), 5)
+val ironAxHardStrike : ActionCard = ActionCard("ironAxHardStrike", "skeleton1.png",
+    "", 7, 0, -30,
+    Array<State>(arrayOf(State("Burn", 2))), 5)
+val ironSwordChop : ActionCard = ActionCard("ironSwordChop", "skeleton1.png",
+    "", 2, 0, -15, Array<State>(), 5)
+val ironSwordStab : ActionCard = ActionCard("ironSwordStab", "skeleton1.png",
+    "", 1, 0, -10, Array<State>(), 5)
+val ironSwordStrike : ActionCard = ActionCard("ironSwordStrike", "skeleton1.png",
+    "", 4, 0, -15,
+    Array<State>(arrayOf(State("Paralysis", 1))), 5)
+val ironHammerStrike : ActionCard = ActionCard("ironHammerStrike", "skeleton1.png",
+    "", 2, 0, -12,
+    Array<State>(arrayOf(State("Paralysis", 2))), 5)
+val ironHammerHardStrike : ActionCard = ActionCard("ironHammerHardStrike", "skeleton1.png",
+    "", 8, 0, -40,
+    Array<State>(arrayOf(State("Paralysis", 2))), 5)
 
 // Items
 val stick : ItemCard = ItemCard("stick", "skeleton1.png", "a simple weapon",
     10, actionCards = Deck(Array<ActionCard>(arrayOf(stickStrike))))
-public var itemInfo: CardData = CardData(mutableListOf(stick))
+val stoneSword : ItemCard = ItemCard("stoneSword", "skeleton1.png", "a simple weapon",
+    5, earth = 15, actionCards = Deck(Array<ActionCard>(arrayOf(stoneSwordStab, stoneSwordChop))))
+val stoneAx : ItemCard = ItemCard("stoneAx", "skeleton1.png", "a simple weapon",
+    10, earth = 10, actionCards = Deck(Array<ActionCard>(arrayOf(stoneAxChop, stoneAxStrike))))
+val bow : ItemCard = ItemCard("bow", "skeleton1.png", "a simple weapon",
+    10, 10, metal = 10, wind = 20,
+    actionCards = Deck(Array<ActionCard>(arrayOf(archery))))
+val ironSword : ItemCard = ItemCard("ironSword", "skeleton1.png", "a simple weapon",
+    10, 10, metal = 20,
+    actionCards = Deck(Array<ActionCard>(arrayOf(ironSwordStab, ironSwordChop, ironSwordStrike))))
+val ironAx : ItemCard = ItemCard("ironAx", "skeleton1.png", "a simple weapon",
+    5, 10, metal = 30,
+    actionCards = Deck(Array<ActionCard>(arrayOf(ironAxChop, ironAxStrike, ironAxHardStrike))))
+val ironHammer : ItemCard = ItemCard("ironHammer", "skeleton1.png", "a simple weapon",
+    5, earth = 10, metal = 30,
+    actionCards = Deck(Array<ActionCard>(arrayOf(ironHammerStrike, ironHammerHardStrike))))
+
+public var itemInfo: CardData = CardData(mutableListOf(stick, stoneSword, stoneAx, bow, ironSword, ironAx, ironHammer))
 
 // materials
 val stone : MaterialCard = MaterialCard("stone","skeleton1.png", "a stone", earth = 5, metal = 2, water = -2)
