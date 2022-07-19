@@ -8,7 +8,6 @@ import com.cs446.awake.model.*
 import com.cs446.awake.utils.BaseActor
 import com.cs446.awake.utils.BaseScreen
 import com.cs446.awake.utils.DragDropActor
-import com.cs446.awake.utils.AutoScrollPane
 
 class MergeScreen() : BaseScreen() {
 
