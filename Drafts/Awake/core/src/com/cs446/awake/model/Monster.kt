@@ -3,7 +3,7 @@ package com.cs446.awake.model
 import com.badlogic.gdx.utils.Array
 
 // Todo: generate deck dynamically according to input field of monster
-class Monster (val images: Array<String?>, val level: Int, val charName: String){
+class Monster (val images: Array<String?>, val level: Int, val charName: String, val reward: MaterialCard){
     fun getDeck (): Deck{
         return getTestDeck()
     }

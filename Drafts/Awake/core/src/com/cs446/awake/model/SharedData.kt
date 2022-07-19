@@ -22,6 +22,8 @@ public var dungeonLevel : Int = 1
 public var HP : Int = 10
 // the energy that the player has at beginning of battle
 public var energy : Int = 5
+// the strength of the player. Now assume it to be never used up
+public var strength : Int = 1000
 
 // the materials that the player collects in dungeon
 public var backPackMaterial : CardData = CardData(mutableListOf())
@@ -106,5 +108,5 @@ val stone : MaterialCard = MaterialCard("stone","skeleton1.png", "a stone", eart
 val log : MaterialCard = MaterialCard("log", "skeleton1.png", "a log", wood = 5, fire = 2, earth = -2)
 public var materialInfo : CardData = CardData(mutableListOf(stone, log))
 
-public var monsterInfo : MonsterData = MonsterData(mutableListOf((Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 1, "Enemy"))))
+public var monsterInfo : MonsterData = MonsterData(mutableListOf((Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 1, "Enemy", stone))))
 

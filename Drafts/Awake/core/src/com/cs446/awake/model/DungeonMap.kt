@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.List
 import com.badlogic.gdx.utils.Array
-val battleProbabilty = 10
+val battleProbabilty = 30
 val collectProbabilty = 30
 val rownum = 2
 val colnum = 6
@@ -29,11 +29,11 @@ class DungeonMap(val level: Int) {
                     continue
                 }
                 // randomize between battle, item, or empty
-                val ram = (0..100).random()
+                val ram = (0 until 100).random()
                 if (ram < battleProbabilty){
                     eventRow.add(BattleEvent("Attack.png", "skeleton1.png", monsterInfo.randomSelect() as Monster))
                 } else if (ram < battleProbabilty + collectProbabilty){
-                    eventRow.add(CollectEvent("Attack.png", "Fire.png", materialInfo.randomSelect() as MaterialCard))
+                    eventRow.add(CollectEvent("Attack.png", "Fire.png", materialInfo.getBelowLevel(level) as MaterialCard))
                 } else {
                     eventRow.add(Event("Attack.png", "Heal.png"))
                 }

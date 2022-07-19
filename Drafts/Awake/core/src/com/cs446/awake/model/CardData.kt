@@ -89,6 +89,18 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
         return validList.randomSelect() as ItemCard?
     }
 
+    // get a random card below certain level
+    fun getBelowLevel(level: Int): MergableCard? {
+        var validList = CardData(mutableListOf<MergableCard>())
+        for (card in getStored()){
+            // be a candidate if all element fields are satisfied
+            if (card.level <= level){
+                validList.add(card)
+            }
+        }
+        // select a random one
+        return validList.randomSelect()
+    }
 
     // initialize the sum value for the elements, combine same cards if possible
     init {
