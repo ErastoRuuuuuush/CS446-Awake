@@ -14,10 +14,10 @@ class BattleEvent (backImg: String, frontImg: String, val monster: Monster) : Ev
         player = Player("Hero", HP, energy, strength, "badlogic.jpg",deck, mutableListOf(), PlayerType.Human)
 
         // add the reward to the backpack
-        backPackItem.add(monster.reward)
+        backPackMaterial.add(monster.reward)
         val randomized = materialInfo.getBelowLevel(monster.level)
         if (randomized != null){
-            backPackItem.add(randomized)
+            backPackMaterial.add(randomized)
         }
         return BATTLE
     }

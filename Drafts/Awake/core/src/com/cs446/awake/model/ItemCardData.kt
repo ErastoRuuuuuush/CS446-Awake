@@ -4,19 +4,27 @@ import java.lang.Integer.max
 
 class ItemCardData (cardList: MutableList<ItemCard>): CardData(cardList as MutableList<MergableCard>){
 
+    // store the copy of list as ItemCards. Only validate after generateItemList is called
+    var itemList = mutableListOf<ItemCard>()
+    fun generateItemList(){
+        itemList = list as MutableList<ItemCard>
+    }
+
     // add a new card into the data list
-    fun add(card: ItemCard){
-        super.add(card)
+    override fun add(card: MergableCard) {
+        if (card is ItemCard) super.add(card)
     }
 
     // return the card with this name, or null if not exist
     override fun find(name: String): ItemCard? {
-        return super.find(name) as ItemCard?
+        val result = super.find(name)
+        if (result is ItemCard) return result
+        return null
     }
 
     // remove a card.
-    fun remove(card: ItemCard){
-        super.remove(card)
+    override fun remove(card: MergableCard){
+        if (card is ItemCard) super.remove(card)
     }
 
     override fun getBelowLevel(level: Int): ItemCard? {

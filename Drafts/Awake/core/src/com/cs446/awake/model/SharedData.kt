@@ -53,7 +53,7 @@ fun readJson (){
     var handle = Gdx.files.local("storage")
     var json = handle.readString()
     var loaded = Gson().fromJson(json, CardData::class.java)
-    // change each card to either MaterialCard or ItemCard
+    // change each MergableCard to either MaterialCard or ItemCard
     for (card in loaded.getStored()){
         val loadedItem = itemInfo.find(card.cardName)
         if (loadedItem != null){
