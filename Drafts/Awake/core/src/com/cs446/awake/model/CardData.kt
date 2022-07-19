@@ -34,6 +34,16 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
         super.add(card.clone())
     }
 
+    // return the card with this name, or null if not exist
+    fun find(name: String): MergableCard? {
+        for (card in list){
+            if (card.cardName == name){
+                return card.clone()
+            }
+        }
+        return null
+    }
+
     // remove a card.
     override fun remove(card: MergableCard){
         // if card with same name already exists, update
@@ -65,13 +75,13 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
         var validList = CardData(mutableListOf<MergableCard>())
         for (item in possilbeOutcomes.getStored()){
             // be a candidate if all element fields are satisfied
-            if (item.earth >= max(inputList.earth,0)
-                && item.fire >= max(inputList.fire ,0)
-                && item.metal >= max(inputList.metal,0)
-                && item.electric >= max(inputList.electric,0)
-                && item.water >= max(inputList.water,0)
-                && item.wood >= max(inputList.wood,0)
-                && item.wind >= max(inputList.wind,0)){
+            if (item.earth <= max(inputList.earth,0)
+                && item.fire <= max(inputList.fire ,0)
+                && item.metal <= max(inputList.metal,0)
+                && item.electric <= max(inputList.electric,0)
+                && item.water <= max(inputList.water,0)
+                && item.wood <= max(inputList.wood,0)
+                && item.wind <= max(inputList.wind,0)){
                 validList.add(item)
             }
         }
