@@ -23,9 +23,10 @@ class DungeonMap(val level: Int) {
                     eventRow.add(Event("Attack.png", "Heal.png"))
                     continue
                 }
-                // The last is always empty exit for next level
+                // The last is always empty exit for next level, except for level == 4, which has the boss
                 if (row == rownum && col == colnum){
-                    eventRow.add(Event("Attack.png", "Heal.png"))
+                    if (level == 4) eventRow.add(BattleEvent("Attack.png", "skeleton1.png", m43))
+                    else eventRow.add(Event("Attack.png", "Heal.png"))
                     continue
                 }
                 // randomize between battle, item, or empty
