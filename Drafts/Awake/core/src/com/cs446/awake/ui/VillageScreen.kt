@@ -55,7 +55,6 @@ class VillageScreen() : BaseScreen() {
     }
 
     override fun initialize() {
-        readJson()
         Gdx.input.inputProcessor = stage
         //stage.addActor(countdownLabel)
         //countdownLabel.setPosition(screenWidth/2 - countdownLabel.width/2, screenHeight/2 + countdownLabel.height/2)

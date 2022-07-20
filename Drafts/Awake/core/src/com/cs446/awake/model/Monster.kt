@@ -18,7 +18,6 @@ class Monster (val images: Array<String?>, val level: Int,  val HP: Int,
                 monsterDeck.addCard(copyCard)
             }
         }
-        println("monster " + charName + "has ${monsterDeck.count()} cards")
         return monsterDeck
     }
     fun getHP (inputLevel: Int = dungeonLevel): Int{
