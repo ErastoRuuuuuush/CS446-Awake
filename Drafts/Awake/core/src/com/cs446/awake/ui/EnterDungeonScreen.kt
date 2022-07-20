@@ -129,6 +129,7 @@ class EnterDungeonScreen() : BaseScreen() {
                     border.setPosition(cardActor.x-10, cardActor.y-10)
                     border1.isVisible = false
                     card = c.clone()
+                    card.count = 1
                     v = true
                     selected = true
                     cardActor.toFront()
