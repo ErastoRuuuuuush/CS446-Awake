@@ -30,10 +30,18 @@ class DungeonMap(val level: Int) {
                 }
                 // randomize between battle, item, or empty
                 val ram = (0 until 100).random()
-                if (ram < battleProbabilty){
-                    eventRow.add(BattleEvent("Attack.png", "skeleton1.png", monsterInfo.randomSelect() as Monster))
+                if (ram < battleProbabilty) {
+                    var monster : Monster? = null
+                    while (monster == null){
+                        monster = monsterInfo.getMonster(level)
+                        if (monster != null) eventRow.add(BattleEvent("Attack.png", "skeleton1.png", monster))
+                    }
                 } else if (ram < battleProbabilty + collectProbabilty){
-                    eventRow.add(CollectEvent("Attack.png", "Fire.png", materialInfo.getBelowLevel(level) as MaterialCard))
+                    var material : MaterialCard? = null
+                    while (material == null){
+                        material = materialInfo.getBelowLevel(level)
+                        if (material != null) eventRow.add(CollectEvent("Attack.png", "Fire.png", material))
+                    }
                 } else {
                     eventRow.add(Event("Attack.png", "Heal.png"))
                 }

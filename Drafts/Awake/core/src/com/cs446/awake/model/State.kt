@@ -18,11 +18,11 @@ class State(val stateName: String,
 
     init {
         when(stateName) {
-            "Burn" -> setBurn()
-            "Freeze" -> setFreeze()
-            "Poison" -> setPoison()
-            "Paralysis" -> setParalysis()
-            "Sleep" -> setSleep()
+            Burn -> setBurn()
+            Freeze -> setFreeze()
+            Poison -> setPoison()
+            Paralysis -> setParalysis()
+            Sleep -> setSleep()
         }
 
     }
@@ -31,11 +31,11 @@ class State(val stateName: String,
         releaseProbability = 0.2
         energyEffect = -0.5
         damage = -0.0625
-        releaseList.add("Freeze")
+        releaseList.add(Freeze)
 
         // add description
         img = "burn.png"
-        description = "Burn"
+        description = Burn
 
     }
 
@@ -43,7 +43,7 @@ class State(val stateName: String,
         releaseProbability = 0.2
         moveProbability = 0.0
         strengthEffect = -0.5
-        releaseList.add("Burn")
+        releaseList.add(Burn)
 
         img = "freeze.png"
         description = "Freeze"
