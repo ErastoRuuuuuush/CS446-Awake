@@ -1,15 +1,19 @@
 package com.cs446.awake.model
 
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Null
 import com.cs446.awake.utils.BaseActor
 import org.jetbrains.annotations.NotNull
 
-abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: Int, val maxStrength: Int, val deck: Deck, var states: MutableList<State>, var playerType: PlayerType) {
+abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: Int, val maxStrength: Int, var charImage: String, val deck: Deck, var states: MutableList<State>, var playerType: PlayerType) {
     var hand: MutableList<ActionCard> = mutableListOf()
     var energy = maxEnergy
     var strength = maxStrength
@@ -17,8 +21,43 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
     var characterStateMap = HashMap<String, BaseActor>()
     var bd : Board? = null
     lateinit var healthBar : ProgressBar
+    lateinit var energyBar : ProgressBar
+    lateinit var image : Texture
+
+    fun createBarStyle(backGroundColor: Color, frontColor: Color, height : Int) : ProgressBar.ProgressBarStyle {
+        // bar background as red
+        var pixmap = Pixmap(10, height, Pixmap.Format.RGBA8888)
+        pixmap.setColor(backGroundColor)
+        pixmap.fill()
+        var drawable = TextureRegionDrawable(TextureRegion(Texture(pixmap)))
+        pixmap.dispose()
+        val progressBarStyle = ProgressBar.ProgressBarStyle()
+        progressBarStyle.background = drawable
+
+
+        // health as green
+        pixmap = Pixmap(0, height, Pixmap.Format.RGBA8888)
+        pixmap.setColor(frontColor)
+        pixmap.fill()
+        drawable = TextureRegionDrawable(TextureRegion(Texture(pixmap)))
+        pixmap.dispose()
+        progressBarStyle.knob = drawable
+
+        pixmap = Pixmap(10, height, Pixmap.Format.RGBA8888)
+        pixmap.setColor(frontColor)
+        pixmap.fill()
+        drawable = TextureRegionDrawable(TextureRegion(Texture(pixmap)))
+        pixmap.dispose()
+        progressBarStyle.knobBefore = drawable
+
+        return progressBarStyle
+    }
 
     abstract fun initBars()
+
+    abstract fun initCharImage()
+
+    abstract fun initChar()
 
     fun setBoard(bd: Board){
         this.bd = bd
@@ -144,8 +183,9 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
         strength += strengthChange
     }
 
-    open fun updateEnergy(energyChange: Int) {
+    fun updateEnergy(energyChange: Int) {
         energy += energyChange
+        energyBar.value = energy / 100f
     }
 
     fun isDead(): Boolean {

@@ -10,39 +10,33 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Array
 
 
-class Enemy(val images: Array<String?>, charName: String, HP: Int, energy: Int, strength: Int, deck: Deck, state: MutableList<State>, playerType: PlayerType) : Character(charName, HP, energy, strength, deck, state, playerType) {
-
+class Enemy(val images: Array<String?>, charName: String, HP: Int, energy: Int, strength: Int, var enemyImage: String, deck: Deck, state: MutableList<State>, playerType: PlayerType) : Character(charName, HP, energy, strength, enemyImage, deck, state, playerType) {
     override fun initBars() {
-        // bar background as red
-        var pixmap = Pixmap(100, 15, Pixmap.Format.RGBA8888)
-        pixmap.setColor(Color.BLACK)
-        pixmap.fill()
-        var drawable = TextureRegionDrawable(TextureRegion(Texture(pixmap)))
-        pixmap.dispose()
-        val progressBarStyle = ProgressBar.ProgressBarStyle()
-        progressBarStyle.background = drawable
+        val heathBarStyle = createBarStyle(Color.BLACK, Color.RED, 20)
 
-        // health as green
-        pixmap = Pixmap(0, 15, Pixmap.Format.RGBA8888)
-        pixmap.setColor(Color.RED)
-        pixmap.fill()
-        drawable = TextureRegionDrawable(TextureRegion(Texture(pixmap)))
-        pixmap.dispose()
-        progressBarStyle.knob = drawable
-
-        pixmap = Pixmap(100, 15, Pixmap.Format.RGBA8888)
-        pixmap.setColor(Color.RED)
-        pixmap.fill()
-        drawable = TextureRegionDrawable(TextureRegion(Texture(pixmap)))
-        pixmap.dispose()
-        progressBarStyle.knobBefore = drawable
-
-
-        healthBar = ProgressBar(0.0f, 1.0f, 0.01f, false, progressBarStyle)
+        healthBar = ProgressBar(0.0f, 1.0f, 0.01f, false, heathBarStyle)
         healthBar.value = 1.0f
         healthBar.setAnimateDuration(0.25f)
-        healthBar.setBounds(500F, 1000F, 1200F, 15F)
+        healthBar.setBounds(1400F, 980F, 600F, 20f)
         healthBar.setRange(0f, HP / 100.0f) // TODO: everytime deal damage, update this
         healthBar.value = HP / 100.0f
+
+        val energyBarStyle = createBarStyle(Color.BLACK, Color.SKY, 20)
+
+        energyBar =  ProgressBar(0.0f, 1.0f, 0.01f, false, energyBarStyle)
+        energyBar.value = 1.0f
+        energyBar.setAnimateDuration(0.25f)
+        energyBar.setBounds(1500F, 930F, 500F, 20f)
+        energyBar.setRange(0f, energy / 100.0f) // TODO: everytime deal damage, update this
+        energyBar.value = energy / 100.0f
+    }
+
+    override fun initCharImage() {
+
+    }
+
+    override fun initChar() {
+//        initCharImage()
+        initBars()
     }
 }

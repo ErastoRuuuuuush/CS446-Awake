@@ -102,7 +102,7 @@ class VillageScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
-                Awake.setActiveScreen(BackpackScreen())
+                Awake.setActiveScreen(BackpackScreen(1))
                 return true
             }
         })
@@ -119,7 +119,7 @@ class VillageScreen() : BaseScreen() {
         bar1.setPosition(house1.x + 90 + anvil.width, anvil.y + 30)
         bar1.setSize(anvil.width / 2, anvil.height / 2)
         bar1.top()
-        val label1 = Label("Weapon", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        val label1 = Label("Storage", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
         label1.setFontScale(0.5f,0.5f)
         bar1.add(label1)
         stage.addActor(bar1)
@@ -139,7 +139,7 @@ class VillageScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
-                Awake.setActiveScreen(DungeonScreen(dungeonMap))
+                Awake.setActiveScreen(BackpackScreen(0))
                 return true
             }
         })
@@ -157,7 +157,7 @@ class VillageScreen() : BaseScreen() {
         bar2.setPosition(house2.x + 90 + apple.width, apple.y + 30)
         bar2.setSize(apple.width / 2, apple.height / 2)
         bar2.top()
-        val label2 = Label("Food", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        val label2 = Label("Gallery", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
         label2.setFontScale(0.5f,0.5f)
         bar2.add(label2)
         stage.addActor(bar2)
@@ -194,7 +194,7 @@ class VillageScreen() : BaseScreen() {
         bar3.setPosition(house3.x + 90 + potion.width, potion.y + 30)
         bar3.setSize(potion.width / 2, potion.height / 2)
         bar3.top()
-        val label3 = Label("Potion", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        val label3 = Label("Craft", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
         label3.setFontScale(0.5f,0.5f)
         bar3.add(label3)
         stage.addActor(bar3)
@@ -231,7 +231,7 @@ class VillageScreen() : BaseScreen() {
         bar4.setPosition(house4.x + 90 + build.width, build.y + 30)
         bar4.setSize(build.width / 2, build.height / 2)
         bar4.top()
-        val label4 = Label("Build", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        val label4 = Label("Placeholder", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
         label4.setFontScale(0.5f,0.5f)
         bar4.add(label4)
         stage.addActor(bar4)
@@ -262,7 +262,7 @@ class VillageScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
-                Awake.setActiveScreen(DungeonScreen(dungeonMap))
+                Awake.setActiveScreen(EnterDungeonScreen())
                 return true
             }
         })

@@ -2,7 +2,7 @@ package com.cs446.awake.model
 
 import java.lang.Integer.max
 
-class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardList){
+open class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardList){
     // the sum of all element in the list
     var wood: Int = 0
     var fire: Int = 0
@@ -34,6 +34,16 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
         super.add(card.clone())
     }
 
+    // return the card with this name, or null if not exist
+    open fun find(name: String): MergableCard? {
+        for (card in list){
+            if (card.cardName == name){
+                return card.clone()
+            }
+        }
+        return null
+    }
+
     // remove a card.
     override fun remove(card: MergableCard){
         // if card with same name already exists, update
@@ -61,24 +71,11 @@ class CardData (cardList: MutableList<MergableCard>): Data<MergableCard>(cardLis
 
     // merge materials or items to get a new item
     // possilbeOutcomes should be all item cards, in particular, our global variable itemInfo
-    fun merge(inputList: CardData, possilbeOutcomes: CardData): ItemCard?{
-        var validList = CardData(mutableListOf<MergableCard>())
-        for (item in possilbeOutcomes.getStored()){
-            // be a candidate if all element fields are satisfied
-            if (item.earth <= max(inputList.earth,0)
-                && item.fire <= max(inputList.fire ,0)
-                && item.metal <= max(inputList.metal,0)
-                && item.electric <= max(inputList.electric,0)
-                && item.water <= max(inputList.water,0)
-                && item.wood <= max(inputList.wood,0)
-                && item.wind <= max(inputList.wind,0)){
-                validList.add(item)
-            }
-        }
-        // select a random one
-        return validList.randomSelect() as ItemCard?
-    }
 
+    fun merge(inputList: CardData = this, possilbeOutcomes: ItemCardData = itemInfo): ItemCard?{
+        // call the merge function with the subclass
+        return possilbeOutcomes.merge(inputList)
+    }
 
     // initialize the sum value for the elements, combine same cards if possible
     init {

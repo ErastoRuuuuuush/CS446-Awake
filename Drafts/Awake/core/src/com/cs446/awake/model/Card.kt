@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array
 import com.google.gson.Gson
 
 
-open class Card(val cardName: String, val img: String, val usage: String = "", var count: Int = 1) {
+open class Card(val cardName: String, val img: String, var usage: String = "", var count: Int = 1) {
 
     open fun use() {}
 

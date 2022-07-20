@@ -16,4 +16,8 @@ class Monster (val images: Array<String?>, val level: Int, val charName: String)
     fun getStrength(): Int{
         return 15
     }
+
+    fun getImage(): String {
+        return "badlogic.jpg"
+    }
 }

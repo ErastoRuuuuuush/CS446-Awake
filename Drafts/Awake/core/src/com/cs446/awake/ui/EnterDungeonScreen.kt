@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
@@ -20,7 +19,7 @@ import com.cs446.awake.utils.BaseScreen
 import com.cs446.awake.utils.DragDropActor
 
 
-class BackpackScreen(val g: Int) : BaseScreen() {
+class EnterDungeonScreen() : BaseScreen() {
     private val screenWidth = Gdx.graphics.width.toFloat()
     private val screenHeight = Gdx.graphics.height.toFloat()
 
@@ -34,12 +33,17 @@ class BackpackScreen(val g: Int) : BaseScreen() {
     private var list = mutableListOf<String>("s","a")
     private lateinit var scrollPane : ScrollPane
 
-    private lateinit var material : BaseActor
-    private lateinit var weapon : BaseActor
+    private lateinit var enter : BaseActor
+    private lateinit var select : BaseActor
     private lateinit var back : BaseActor
     private lateinit var paper : BaseActor
     private lateinit var name : Label
     private lateinit var use : Label
+    private lateinit var card : MergableCard
+    private lateinit var border1 : Image
+    private lateinit var border : Image
+    private var v = true
+    private var selected = false
 
     // Function that active the timer
     private fun startTimer(frames: Int, endTime : () -> Unit, duringTime : () -> Unit) {
@@ -64,7 +68,7 @@ class BackpackScreen(val g: Int) : BaseScreen() {
         }
     }
 
-    fun showInfo(card: MergableCard) {
+    private fun showInfo(card: MergableCard) {
         name.setText(card.cardName)
         name.setFontScale(0.8f)
         name.setPosition(paper.x + 50, paper.y + 300)
@@ -77,7 +81,7 @@ class BackpackScreen(val g: Int) : BaseScreen() {
         use.wrap = true
     }
 
-    fun backpackScroll(i: Int) {
+    private fun backpackScroll() {
         paper = BaseActor(0f, 0f, stage)
         paper.loadTexture("paperboarder.png")
         paper.setPosition(100f, 300f)
@@ -90,20 +94,16 @@ class BackpackScreen(val g: Int) : BaseScreen() {
 
         var table = Table()
         var container = Table()
-
         // Card's border
         val borderTexture =
             Texture(Gdx.files.internal("highlight_border.png")) // TODO: change the texture
-        val borderImage = Image(borderTexture)
-        borderImage.isVisible = false
+        border = Image(borderTexture)
+        border.isVisible = false
         for (c in storage.getStored()) {
-            if (i == 1 && c is MaterialCard) {
+            if (c is MaterialCard) {
                 continue
             }
-            if (i == 2 && c is ItemCard) {
-                continue
-            }
-            if (g == 1 && c.count == 0) {
+            if (c.count == 0) {
                 continue
             }
             val cardActor = BaseActor(0f, 0f, stage)
@@ -119,26 +119,31 @@ class BackpackScreen(val g: Int) : BaseScreen() {
                 ): Boolean {
                     showInfo(c)
                     val borderWidth = 30
-                    borderImage.setSize(
+                    border.isVisible = true
+                    border.setSize(
                         cardActor.width + borderWidth * 2,
                         cardActor.height + borderWidth * 2
                     )
-                    borderImage.isVisible = true
-                    borderImage.setPosition(cardActor.x - borderWidth, cardActor.y - borderWidth)
+                    border.setPosition(cardActor.x - borderWidth, cardActor.y - borderWidth)
+                    border1.isVisible = false
+                    card = c.clone()
+                    v = true
+                    selected = true
                     return true
                 }
             })
             table.add(cardActor)
         }
-        table.add(borderImage)
+        table.add(border)
         table.row()
+        //table.setSize(screenWidth - 300, 860f)
 
         scrollPane = ScrollPane(table)
         scrollPane.scrollTo(0f,0f,0f,0f)
 
         container.add(scrollPane)
         container.setPosition(300f, 260f)
-        container.setSize(screenWidth - 100, 860f)
+        container.setSize(screenWidth - 100, 430f)
         var skin = Skin()
         skin.add("logo", Texture("bpback.png"));
         container.background(skin.getDrawable("logo"))
@@ -146,23 +151,63 @@ class BackpackScreen(val g: Int) : BaseScreen() {
         container.getCell(scrollPane).size(1900f,600f)
         stage.addActor(container)
 
-        back = BaseActor(0f, 0f, stage)
-        back.loadTexture("EndTurnButton.png")
-        back.setSize(250f, 200f)
-        back.centerAtPosition(screenWidth / 5 * 0 + back.width / 2 + 300, (screenHeight / 2) + back.height / 2 - 700)
-        // Set event action
-        back.addListener(object : InputListener() {
-            override fun touchDown(
-                event: InputEvent?,
-                x: Float,
-                y: Float,
-                pointer: Int,
-                button: Int
-            ): Boolean {
-                Awake.setActiveScreen(BackpackScreen(g))
-                return true
+        var table1 = Table()
+        var container1 = Table()
+        val borderTexture1 =
+            Texture(Gdx.files.internal("highlight_border.png")) // TODO: change the texture
+        border1 = Image(borderTexture1)
+        border1.isVisible = false
+        for (c in backPackItem.getStored()) {
+            if (c is MaterialCard) {
+                continue
             }
-        })
+            if (c.count == 0) {
+                continue
+            }
+            val cardActor = BaseActor(0f, 0f, stage)
+            cardActor.loadTexture(c.img)
+            cardActor.setSize(500f, 600f)
+            cardActor.addListener(object : InputListener() {
+                override fun touchDown(
+                    event: InputEvent?,
+                    x: Float,
+                    y: Float,
+                    pointer: Int,
+                    button: Int
+                ): Boolean {
+                    showInfo(c)
+                    val borderWidth = 30
+                    border1.isVisible = true
+                    border1.setSize(
+                        cardActor.width + borderWidth * 2,
+                        cardActor.height + borderWidth * 2
+                    )
+                    border1.setPosition(cardActor.x - borderWidth, cardActor.y - borderWidth)
+                    border.isVisible = false
+                    card = c.clone()
+                    v = false
+                    selected = true
+                    return true
+                }
+            })
+            table1.add(cardActor)
+        }
+        table1.add(border1)
+        table1.row()
+        //table.setSize(screenWidth - 300, 860f)
+
+        scrollPane = ScrollPane(table1)
+        scrollPane.scrollTo(0f,0f,0f,0f)
+
+        container1.add(scrollPane)
+        container1.setPosition(300f, 860f)
+        container1.setSize(screenWidth - 100, 430f)
+        var skin1 = Skin()
+        skin1.add("logo", Texture("bpback.png"));
+        container1.background(skin1.getDrawable("logo"))
+        container1.row()
+        container1.getCell(scrollPane).size(1900f,600f)
+        stage.addActor(container1)
 
     }
 
@@ -177,13 +222,13 @@ class BackpackScreen(val g: Int) : BaseScreen() {
         background.setSize(screenWidth, (screenWidth / background.width * background.height))
         background.centerAtPosition(screenWidth / 2, screenHeight / 2)
 
-
-        weapon = BaseActor(0f, 0f, stage)
-        weapon.loadTexture("equipment.png")
-        weapon.setSize(800f, 850f)
-        weapon.centerAtPosition(screenWidth / 3, (screenHeight / 3) + weapon.height / 2 - 200)
+        backpackScroll()
+        enter = BaseActor(0f, 0f, stage)
+        enter.loadTexture("EndTurnButton.png")
+        enter.setSize(300f, 350f)
+        enter.centerAtPosition(screenWidth / 5 * 4 + enter.width / 2 + 200, (screenHeight / 2) + enter.height / 2 - 600)
         // Set event action
-        weapon.addListener(object : InputListener() {
+        enter.addListener(object : InputListener() {
             override fun touchDown(
                 event: InputEvent?,
                 x: Float,
@@ -191,20 +236,17 @@ class BackpackScreen(val g: Int) : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
-                weapon.remove()
-                material.remove()
-                back.remove()
-                backpackScroll(1)
+                Awake.setActiveScreen(DungeonScreen(DungeonMap(dungeonLevel)))
                 return true
             }
         })
 
-        material = BaseActor(0f, 0f, stage)
-        material.loadTexture("material.png")
-        material.setSize(800f, 850f)
-        material.centerAtPosition(screenWidth / 3 * 2, (screenHeight / 3) + material.height / 2 - 200)
+        select = BaseActor(0f, 0f, stage)
+        select.loadTexture("EndTurnButton.png")
+        select.setSize(300f, 350f)
+        select.centerAtPosition(screenWidth / 5 * 2 + select.width / 2 + 200, (screenHeight / 2) + select.height / 2 - 600)
         // Set event action
-        material.addListener(object : InputListener() {
+        select.addListener(object : InputListener() {
             override fun touchDown(
                 event: InputEvent?,
                 x: Float,
@@ -212,10 +254,17 @@ class BackpackScreen(val g: Int) : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
-                weapon.remove()
-                material.remove()
-                back.remove()
-                backpackScroll(2)
+                if (!selected) {
+                    return true
+                }
+                if (v) {
+                    storage.remove(card)
+                    backPackItem.add(card)
+                } else {
+                    backPackItem.remove(card)
+                    storage.add(card)
+                }
+                Awake.setActiveScreen(EnterDungeonScreen())
                 return true
             }
         })

@@ -18,11 +18,11 @@ class State(val stateName: String,
 
     init {
         when(stateName) {
-            "Burn" -> setBurn()
-            "Freeze" -> setFreeze()
-            "Poison" -> setPoison()
-            "Paralysis" -> setParalysis()
-            "Sleep" -> setSleep()
+            Burn -> setBurn()
+            Freeze -> setFreeze()
+            Poison -> setPoison()
+            Paralysis -> setParalysis()
+            Sleep -> setSleep()
         }
 
     }
@@ -31,11 +31,11 @@ class State(val stateName: String,
         releaseProbability = 0.2
         energyEffect = -0.5
         damage = -0.0625
-        releaseList.add("Freeze")
+        releaseList.add(Freeze)
 
         // add description
         img = "burn.png"
-        description = "Burn"
+        description = Burn
 
     }
 
@@ -43,7 +43,7 @@ class State(val stateName: String,
         releaseProbability = 0.2
         moveProbability = 0.0
         strengthEffect = -0.5
-        releaseList.add("Burn")
+        releaseList.add(Burn)
 
         img = "freeze.png"
         description = "Freeze"
@@ -86,7 +86,8 @@ class State(val stateName: String,
         effectiveRound += extendedState.effectiveRound
     }
 
-    fun apply(target: Character){
+    // Return true to stop character using cards. (Freeze Character)
+    fun apply(target: Character): Boolean {
         //target.removeState(releaseList)
         // check if the state can be released
 
@@ -94,12 +95,12 @@ class State(val stateName: String,
         //    target.removeState(mutableListOf(stateName))
         //    return
         //}
-
+        var freezePlayer = false
         // check if player can move
         if (moveProbability == 0.0) {
-            target.endRound()
+            freezePlayer = true
         } else if (moveProbability < 1.0 && !random_event(moveProbability)) {
-            target.endRound()
+            freezePlayer = true
         }
 
         // damage
@@ -121,6 +122,7 @@ class State(val stateName: String,
         //if (effectiveRound <= 0){
         //    target.removeState(mutableListOf(stateName))
         //}
+        return freezePlayer
     }
 
 }

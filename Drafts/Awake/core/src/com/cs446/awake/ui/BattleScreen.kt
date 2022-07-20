@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.utils.Array
 import com.cs446.awake.model.*
 import com.cs446.awake.utils.*
+import kotlin.math.abs
 
 // TODO: List
 //   1. 点击卡牌，出现卡牌信息
@@ -51,10 +52,22 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
     private lateinit var infoPlayerTurn : Label
     private lateinit var finishPlayerRound : BaseActor // A button
     private val cardList = ArrayList<DragDropActor>() // Used for cleaning
+
+    private lateinit var enemyAttackActor : BaseActor
+    private lateinit var playerImageActor : BaseActor
+    private lateinit var enemyImageActor: BaseActor
+
     // Card's border
     private val borderTexture =
         Texture(Gdx.files.internal("highlight_border.png")) // TODO: change the texture
     private val borderImage = Image(borderTexture)
+
+    // description
+    private val descriptionTexture =
+        Texture(Gdx.files.internal("card_empty.png"))
+    private val descriptionImage = Image(descriptionTexture)
+    private  val descriptionTable = Table()
+
 
     //// Variable of game Core
     private var currentTurn : Character = player
@@ -62,7 +75,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
     // Timer variables
     private var worldTimer  = -1
     private var activeTimer = false
-    private val timerLimit = 10 // Not 0 in case of concurrency issue.
+    private val timerLimit = 5 // Not 0 in case of concurrency issue.
     private var endTimeFcn : () -> Unit = {} // lambda function about what to do when time ends
     private var duringTimeFcn : () -> Unit = {} // lambda function about what to do when each frame passed.
 
@@ -90,59 +103,85 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         }
     }
 
+    // Notify that character froze and call the endTurn.
+    private fun frozeNotify(who: String) {
+        // Character is froze due to the negative state applied, cannot use any card.
+        val frozeNotification = Label("$who froze due to negative state!", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        frozeNotification.setPosition(screenWidth/2 - frozeNotification.width/2, screenHeight/2 - frozeNotification.height/2)
+        stage.addActor(frozeNotification)
+        // Let notification vanish after 1 sec of display
+        val endTime: () -> Unit = {
+            val duringTime : () -> Unit = { frozeNotification.color.a = (worldTimer / 30f) } // alpha value is the opacity value
+            val endTime : () -> Unit = {
+                frozeNotification.remove()
+                endTurn() // End enemy's turn
+            }
+            startTimer(30, endTime, duringTime)
+        }
+        startTimer(50, endTime, {}) // about 1 second
+    }
+
     // Let enemy (AI) draw cards.
     private fun enemyTurn() {
         stage.addActor(infoAITurn)
 
-        // Enemy use one card
-        val card = currentTurn.selectRamdomCard()
-        val cardActor = BaseActor(0f, 0f, stage)
-        cardActor.loadTexture(card.img)
-        cardActor.centerAtPosition(screenWidth / 2, screenHeight)
-        cardActor.moveBy(0f, -550f)
+        if (enemy.canUseCard) {
+            // Enemy use one card
+            val card = currentTurn.selectRamdomCard()
+            val cardActor = BaseActor(0f, 0f, stage)
+            cardActor.loadTexture(card.img)
+            cardActor.centerAtPosition(screenWidth / 2, screenHeight)
+            cardActor.moveBy(0f, -550f)
 
-        // Same border image as the player's one
-        val borderWidth = 30
-        borderImage.setSize(
-            cardActor.width + borderWidth * 2,
-            cardActor.height + borderWidth * 2
-        )
-        borderImage.setPosition(cardActor.x - borderWidth, cardActor.y - borderWidth)
-        stage.addActor(borderImage)
+            // Same border image as the player's one
+            val borderWidth = 30
+            borderImage.setSize(
+                cardActor.width + borderWidth * 2,
+                cardActor.height + borderWidth * 2
+            )
+            borderImage.setPosition(cardActor.x - borderWidth, cardActor.y - borderWidth)
+            stage.addActor(borderImage)
 
-        // The following code will do
-        // 1. display card for 1sec
-        // 2. vanish the card in 0.5sec
-        // 3. remove the card and finish AI turn
+            // The following code will do
+            // 1. display card for 1sec
+            // 2. vanish the card in 0.5sec
+            // 3. remove the card and finish AI turn
 
-        // 1. display card for about 1sec
-        val timeUp : () -> Unit = {
-            // When time up, vanish card
-            val duringTime : () -> Unit = {
-                // 2. vanish the card in about 0.5sec
-                val value : Float = worldTimer / 60f
-                borderImage.color.a = value
-                cardActor.setOpacity(value)
+            // 1. display card for about 1sec
+            val timeUp: () -> Unit = {
+                // When time up, vanish card
+                val duringTime: () -> Unit = {
+                    // 2. vanish the card in about 0.5sec
+                    val value: Float = worldTimer / 60f
+                    borderImage.color.a = value
+                    cardActor.setOpacity(value)
+                }
+                val endTime: () -> Unit = {
+                    // 3. remove the card and finish AI turn
+                    borderImage.remove()
+                    borderImage.color.a = 1f // Reset the alpha value
+                    cardActor.remove()
+                    // Apply the Card effect
+                    useCard(card)
+                    // End enemy Turn
+                    endTurn()
+                }
+                startTimer(40, endTime, duringTime)
             }
-            val endTime : () -> Unit = {
-                // 3. remove the card and finish AI turn
-                borderImage.remove()
-                borderImage.color.a = 1f // Reset the alpha value
-                cardActor.remove()
-                // Apply the Card effect
-                useCard(card)
-                // End enemy Turn
-                endTurn()
-            }
-            startTimer(40, endTime, duringTime)
+            startTimer(60, timeUp) {}
+        } else {
+            frozeNotify("enemy") // This will call endTurn automatically
         }
-        startTimer(60, timeUp) {}
     }
 
     // Let player draw cards.
     private fun playerTurn() {
         stage.addActor(infoPlayerTurn)
-        stage.addActor(finishPlayerRound)
+        if (player.canUseCard) {
+            stage.addActor(finishPlayerRound)
+        } else {
+            frozeNotify("You")// This will call endTurn automatically
+        }
     }
 
     // Function that check if player win or lose.
@@ -167,8 +206,12 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         infoAITurn.remove()
         infoPlayerTurn.remove()
         // PreRound: Restore energy and apply state effect
-        player.preRound()
-        enemy.preRound()
+        if (currentTurn == player) {
+            player.preRound()
+        } else {
+            enemy.preRound()
+        }
+
         // Give card to player for player's turn
         if (currentTurn == player) {
             renderCard()
@@ -203,8 +246,11 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
     // Function that apply the end part of round of game.
     private fun endTurn() {
         // PostRound: Check if any state time is expired, remove state
-        player.postRound()
-        enemy.postRound()
+        if (currentTurn == player) {
+            player.postRound()
+        } else {
+            enemy.postRound()
+        }
         // Check if game ends
         if (isPlayerWin() != null) {
             // Game end
@@ -224,6 +270,10 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
 
     // The game result with player wins.
     private fun winGame() {
+        // Clean the round indicator
+        infoAITurn.remove()
+        infoPlayerTurn.remove()
+
         val winLabel = Label("You Win!", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
         winLabel.setPosition(screenWidth/2 - winLabel.width/2, screenHeight/2 - winLabel.height/2)
         stage.addActor(winLabel)
@@ -239,6 +289,10 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
 
     // The game result with player lose.
     private fun loseGame() {
+        // Clean the round indicator
+        infoAITurn.remove()
+        infoPlayerTurn.remove()
+
         // TODO: Exit back to Village.
         val winLabel = Label("You Lose!", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
         winLabel.setPosition(screenWidth/2 - winLabel.width/2, screenHeight/2 - winLabel.height/2)
@@ -256,45 +310,107 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         val cardTotal = player.hand.size - 1
         for ((handIndex, card) in player.hand.withIndex()) {
             // TODO: Change target enemy to player for heal card, need an area to drop for player
-            val cardActor = DragDropActor(0f, 0f, stage, enemyDisplay)
-            cardActor.toFront()
+            val cardActor = DragDropActor(0f, 0f, stage, enemyAttackActor, playerImageActor)
             cardActor.loadTexture(card.img)
-            cardActor.centerAtPosition(0f, screenHeight - 950f)
+            // y-coord is set to hide the bottom half, click to elevate?
+            cardActor.centerAtPosition(350f, screenHeight - 950f)
+            cardActor.setRotation(30f - 15f*handIndex)
             cardActor.moveBy(
                 (screenWidth - (cardTotal * cardActor.width + (cardTotal - 1) * intervalWid)) / 2 + handIndex * (cardActor.width + intervalWid),
-                0f
+                70f - abs(2-handIndex) *35f
             )
-            // Event when card drag hit enemy TODO: add when hit player itself
-            cardActor.setOnDropIntersect {
-                println("intersected when dropped")
-                // TODO: check later on when the turn is not player, should not able to move.
-                //   if (board.checkTurn(board.player)) {
-                cardActor.remove()
-                useCard(card)
-                borderImage.remove()
+            if (card.isHealCard()) {
+                cardActor.setOnDropPlayerIntersect {
+                    cardActor.remove()
+                    useCard(card)
+                    borderImage.remove()
+                }
+                cardActor.setOnDragPlayerIntersect {
+                    val borderWidth = 30
+                    borderImage.setSize(
+                        cardActor.width + borderWidth * 2,
+                        cardActor.height + borderWidth * 2
+                    )
+
+                    borderImage.setPosition(
+                        cardActor.x - borderWidth,
+                        cardActor.y - borderWidth
+                    )
+
+                    stage.addActor(borderImage)
+                    cardActor.toFront()
+                }
+
+                cardActor.setOnDropEnemyIntersect {
+                    cardActor.setPosition(cardActor.startX, cardActor.startY)
+                    cardActor.setRotation(cardActor.startRotation)
+                    borderImage.remove()
+                }
+                cardActor.setOnDragEnemyIntersect {
+                    borderImage.remove()
+                }
+
+            } else {
+                cardActor.setOnDropEnemyIntersect {
+                    cardActor.remove()
+                    useCard(card)
+                    borderImage.remove()
+                }
+                cardActor.setOnDragEnemyIntersect {
+                    //println("CARD USING?")
+                    val borderWidth = 30
+                    borderImage.setSize(
+                        cardActor.width + borderWidth * 2,
+                        cardActor.height + borderWidth * 2
+                    )
+
+                    borderImage.setPosition(
+                        cardActor.x - borderWidth,
+                        cardActor.y - borderWidth
+                    )
+
+                    stage.addActor(borderImage)
+                    cardActor.toFront()
+                }
+
+                cardActor.setOnDropPlayerIntersect {
+                    cardActor.setPosition(cardActor.startX, cardActor.startY)
+                    cardActor.setRotation(cardActor.startRotation)
+                    borderImage.remove()
+                }
+                cardActor.setOnDragPlayerIntersect {
+                    borderImage.remove()
+                }
             }
-            // Event when card drag not hit enemy, go back to original position
+            cardActor.setOnClick {
+                cardActor.setRotation(0f)
+                println("clicking")
+                descriptionTable.setSize(
+                    cardActor.width,
+                    cardActor.height
+                )
+                descriptionTable.setPosition(cardActor.x, cardActor.y+cardActor.height)
+
+                stage.addActor(descriptionTable)
+            }
+
+            cardActor.setOnDrag {
+                descriptionTable.remove()
+            }
+
+            cardActor.setOnDrop {
+                descriptionTable.remove()
+            }
+
             cardActor.setOnDropNoIntersect {
                 cardActor.setPosition(cardActor.startX, cardActor.startY)
+                cardActor.setRotation(cardActor.startRotation)
                 borderImage.remove()
             }
-            // Event when card is being dragged
-            cardActor.setOnDragIntersect {
-                val borderWidth = 30
-                borderImage.setSize(
-                    cardActor.width + borderWidth * 2,
-                    cardActor.height + borderWidth * 2
-                )
-                borderImage.setPosition(cardActor.x - borderWidth, cardActor.y - borderWidth)
-                stage.addActor(borderImage)
-                cardActor.toFront()
-            }
-            // Event when card is released from drag
             cardActor.setOnDragNoIntersect {
                 borderImage.remove()
             }
-            // Add current card to the cardList so that can be cleaned each round.
-            // cardList.add(cardActor)
+
         }
     }
 
@@ -329,11 +445,33 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         enemyDisplay.centerAtPosition(screenWidth / 2, screenHeight)
         enemyDisplay.moveBy(0f, -550f)
 
+        enemyAttackActor = BaseActor(0f, 0f, stage)
+        enemyAttackActor.loadTexture("card_empty.png")
+        enemyAttackActor.setOpacity(0.3f)
+        enemyAttackActor.setSize(enemyAttackActor.width*2, enemyAttackActor.height*2)
+        enemyAttackActor.centerAtPosition(screenWidth/2, screenHeight)
+        enemyAttackActor.moveBy(0f, -300f)
+
+        // enemy actor
+        enemyImageActor = BaseActor(0f, 0f, stage)
+        enemyImageActor.loadTexture(enemy.enemyImage)
+        enemyImageActor.centerAtPosition(screenWidth - 220f, screenHeight - 150f)
+
+        // player actor
+
+        playerImageActor = BaseActor(0f, 0f, stage)
+        playerImageActor.loadTexture(player.playerImage)
+        playerImageActor.centerAtPosition(220f, 150f)
+
         // Bars
-        // TODO: NOTICE: strength bar will not be used in final game design, need remove.
         stage.addActor(enemy.healthBar)
+        stage.addActor(enemy.energyBar)
         stage.addActor(player.healthBar)
         stage.addActor(player.energyBar)
+
+        // Description
+        descriptionTable.add(descriptionImage).fill()
+//      descriptionTable.add(Label("Dummy Description", Skin())).expandY().fillY()
 
         // State
         for ((stateIndex, state) in stateList.withIndex()) {
@@ -343,7 +481,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
             // State of player
             val playerStateActor = BaseActor(0f, 0f, stage)
             playerStateActor.loadTexture("${state.lowercase()}.png")
-            playerStateActor.centerAtPosition(-900f, screenHeight - 1000f)
+            playerStateActor.centerAtPosition(-650f, screenHeight - 850f)
             playerStateActor.moveBy(
                 (screenWidth - (4 * stateWidth + 3 * intervalWid)) / 2 + stateIndex * stateWidth,
                 0f
@@ -353,7 +491,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
             // State of enemy
             val enemyStateActor = BaseActor(0f, 0f, stage)
             enemyStateActor.loadTexture("${state.lowercase()}.png")
-            enemyStateActor.centerAtPosition(800f, screenHeight - 100f)
+            enemyStateActor.centerAtPosition(650f, screenHeight - 150f)
             enemyStateActor.moveBy(
                 (screenWidth - (4 * stateWidth + (4 - 1) * intervalWid)) / 2 + stateIndex * stateWidth,
                 0f
@@ -380,7 +518,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         // * Not yet added to stage, only added when Player turn starts
         finishPlayerRound = BaseActor(0f, 0f, stage)
         finishPlayerRound.loadTexture("EndTurnButton.png")
-        finishPlayerRound.centerAtPosition(screenWidth - 250f, 150f)
+        finishPlayerRound.centerAtPosition(screenWidth - 250f, 400f)
         finishPlayerRound.addListener(object : InputListener() {
             override fun touchDown(
                 event: InputEvent?,
