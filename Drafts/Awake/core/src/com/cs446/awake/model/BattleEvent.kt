@@ -17,7 +17,7 @@ class BattleEvent (backImg: String, frontImg: String, val monster: Monster) : Ev
             }
             item.addToDeck(deck)
         }
-        player = Player("Hero", HP, energy, strength, "badlogic.jpg",deck, mutableListOf(), PlayerType.Human)
+        player = Player("Hero", getHP(), getEnergy(), strength, "badlogic.jpg",deck, mutableListOf(), PlayerType.Human)
 
         // add the reward to the backpack
         for (rewarded in monster.reward.keys){
