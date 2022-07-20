@@ -1,6 +1,7 @@
 package com.cs446.awake.ui
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -39,6 +40,8 @@ class EnterBattleScreen() : BaseScreen() {
     private lateinit var border : Image
     private var v = true
     private var selected = false
+
+//    private lateinit var enterBattleMusic : Music
 
     // Function that active the timer
     private fun startTimer(frames: Int, endTime : () -> Unit, duringTime : () -> Unit) {
@@ -113,6 +116,9 @@ class EnterBattleScreen() : BaseScreen() {
                     pointer: Int,
                     button: Int
                 ): Boolean {
+                    select.loadTexture("selectButton.png")
+                    select.setSize(buttonHeight / select.height * select.width, buttonHeight)
+                    select.setPosition(screenWidth / 2 - select.width / 2, 20f)
                     showInfo(c)
                     border.isVisible = true
                     border.setSize(
@@ -227,6 +233,12 @@ class EnterBattleScreen() : BaseScreen() {
         //stage.addActor(countdownLabel)
         //countdownLabel.setPosition(screenWidth/2 - countdownLabel.width/2, screenHeight/2 + countdownLabel.height/2)
 
+        // Music
+//        enterBattleMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/enterBattle.wav"))
+//        enterBattleMusic.setLooping(true)
+//        enterBattleMusic.volume = 200f
+//        enterBattleMusic.play()
+
         // Background Picture
         val background = BaseActor(0f, 0f, stage)
         background.loadTexture("dragonBackground.png")
@@ -257,10 +269,11 @@ class EnterBattleScreen() : BaseScreen() {
                     }
                     item.addToDeck()
                 }
-                player = Player("Hero", getHP(), getEnergy(), strength, "badlogic.jpg", deck, mutableListOf(), PlayerType.Human)
+                player = Player("Hero", getHP(), getEnergy(), strength, "hero_bar.png", deck, mutableListOf(), PlayerType.Human)
                 if (player != null && enemy != null) {
                     val p : Player = player as Player
                     val e : Enemy = enemy as Enemy
+//                    enterBattleMusic.stop()
                     Awake.setActiveScreen(BattleScreen(p, e))
                 }
                 return true
@@ -283,6 +296,9 @@ class EnterBattleScreen() : BaseScreen() {
                 if (!selected) {
                     return true
                 }
+                val weaponMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/item-equip-6904.wav"))
+                weaponMusic.volume = 200f
+                weaponMusic.play()
                 if (v) {
                     backPackItem.remove(card)
                     battleItem.add(card)
@@ -291,6 +307,7 @@ class EnterBattleScreen() : BaseScreen() {
                     backPackItem.add(card)
                 }
                 println(battleItem.itemList.size)
+//                enterBattleMusic.stop()
                 Awake.setActiveScreen(EnterBattleScreen())
                 return true
             }

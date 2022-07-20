@@ -1,6 +1,7 @@
 package com.cs446.awake.ui
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -31,6 +32,8 @@ class VillageScreen() : BaseScreen() {
     // private val countdownLabel = Label(String.format("%03d", worldTimer), Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
     private val dungeonMap : DungeonMap = DungeonMap(1)
 
+    private lateinit var villageMusic : Music
+
     // Function that active the timer
     private fun startTimer(frames: Int, endTime : () -> Unit, duringTime : () -> Unit) {
         endTimeFcn = endTime
@@ -59,6 +62,13 @@ class VillageScreen() : BaseScreen() {
         Gdx.input.inputProcessor = stage
         //stage.addActor(countdownLabel)
         //countdownLabel.setPosition(screenWidth/2 - countdownLabel.width/2, screenHeight/2 + countdownLabel.height/2)
+
+        // Music
+        villageMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/village_bgm.wav"))
+        villageMusic.setLooping(true)
+        villageMusic.volume = 200f
+        villageMusic.play()
+
 
         // Background Picture
         val background = BaseActor(0f, 0f, stage)
@@ -107,6 +117,7 @@ class VillageScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                villageMusic.stop()
                 Awake.setActiveScreen(BackpackScreen(1))
                 return true
             }
@@ -137,6 +148,7 @@ class VillageScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                villageMusic.stop()
                 Awake.setActiveScreen(BackpackScreen(0))
                 return true
             }
@@ -168,6 +180,7 @@ class VillageScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                villageMusic.stop()
                 Awake.setActiveScreen(MergeScreen())
                 return true
             }
@@ -213,6 +226,7 @@ class VillageScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                villageMusic.stop()
                 Awake.setActiveScreen(EnterDungeonScreen())
                 return true
             }

@@ -1,6 +1,7 @@
 package com.cs446.awake.ui
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -37,10 +38,18 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
     private val timerList = ArrayList<Timer>()
     private var lockTouchDown = false
 
+    lateinit var dungeonMusic : Music
+
 
     override fun initialize() {
         Gdx.input.inputProcessor = stage
         dungeonMap = map
+
+        // Music
+        dungeonMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/spy-game-56943.wav"))
+        dungeonMusic.setLooping(true)
+        dungeonMusic.volume = 200f
+        dungeonMusic.play()
 
         // Background Picture
         val background = BaseActor(0f, 0f, stage)
@@ -83,6 +92,7 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
                 backPackItem = ItemCardData(mutableListOf())
                 backPackMaterial = MaterialCardData(mutableListOf())
                 battleItem = ItemCardData(mutableListOf())
+                dungeonMusic.stop()
                 Awake.setActiveScreen(VillageScreen())
                 dumpJson()
                 return true
@@ -94,6 +104,18 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
         backpackButtonActor.loadTexture("Icon_backpack.png")
         backpackButtonActor.setSize(backpackButtonActor.width/2, backpackButtonActor.height/2)
         backpackButtonActor.setPosition(screenWidth-250f, screenHeight-150f)
+        backpackButtonActor.addListener(object : InputListener() {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
+                Awake.setActiveScreen(DungeonBagScreen())
+                return true
+            }
+        })
 
         // Add Event Cards
         for (row in 0 until 3) {
@@ -161,6 +183,10 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
         itemNotify.setPosition(screenWidth/2 - itemNotify.width/2, screenHeight/2 + itemNotify.height/2)
         stage.addActor(itemNotify)
 
+        val enemySound = Gdx.audio.newMusic(Gdx.files.internal("sound/mixkit-ominous-drums-227.wav"))
+        enemySound.volume = 200f
+        enemySound.play()
+
         // Display 0.4 sec
         val timeUp: () -> Unit = {
             // When time up, vanish card
@@ -171,6 +197,7 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
             }
             val endTime: () -> Unit = {
                 itemNotify.remove()
+                dungeonMusic.stop()
                 // Start select card for battle
                 Awake.setActiveScreen(EnterBattleScreen())
             }
@@ -184,6 +211,10 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
         val itemNotify = Label("Collected Item!", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
         itemNotify.setPosition(screenWidth/2 - itemNotify.width/2, screenHeight/2 + itemNotify.height/2)
         stage.addActor(itemNotify)
+
+        val collectSound = Gdx.audio.newMusic(Gdx.files.internal("sound/mixkit-arcade-game-complete-or-approved-mission-205.wav"))
+        collectSound.volume = 200f
+        collectSound.play()
 
         val colletEvent = map.map[row][col] as CollectEvent
         // Get the item picture
@@ -245,6 +276,7 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
             val endTime: () -> Unit = {
                 itemNotify.remove()
                 // Start select card for battle
+                dungeonMusic.stop()
                 Awake.setActiveScreen(EnterBattleScreen())
             }
             startTimer(20, endTime, duringTime, timer)
@@ -260,6 +292,10 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
         itemNotify.setPosition(screenWidth/2 - itemNotify.width/2, screenHeight/2 + itemNotify.height/2)
         stage.addActor(itemNotify)
 
+        val levelUpSound = Gdx.audio.newMusic(Gdx.files.internal("sound/mixkit-game-level-completed-2059.wav"))
+        levelUpSound.volume = 200f
+        levelUpSound.play()
+
         // Display 0.4 sec
         val timeUp: () -> Unit = {
             // When time up, vanish card
@@ -272,6 +308,7 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
                 itemNotify.remove()
                 stage.clear()
                 dungeonLevel++
+                dungeonMusic.stop()
                 Awake.setActiveScreen(DungeonScreen(DungeonMap(dungeonLevel)))
                 dumpJson()
             }

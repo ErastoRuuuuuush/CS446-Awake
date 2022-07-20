@@ -1,6 +1,7 @@
 package com.cs446.awake.ui
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -45,6 +46,8 @@ class EnterDungeonScreen() : BaseScreen() {
     private lateinit var border : Image
     private var v = true
     private var selected = false
+
+    lateinit var dungeonMusic : Music
 
     // Function that active the timer
     private fun startTimer(frames: Int, endTime : () -> Unit, duringTime : () -> Unit) {
@@ -119,6 +122,9 @@ class EnterDungeonScreen() : BaseScreen() {
                     pointer: Int,
                     button: Int
                 ): Boolean {
+                    select.loadTexture("selectButton.png")
+                    select.setSize(buttonHeight / select.height * select.width, buttonHeight)
+                    select.setPosition(screenWidth / 2 - select.width / 2, 20f)
                     showInfo(c)
                     border.isVisible = true
                     border.setSize(
@@ -232,6 +238,12 @@ class EnterDungeonScreen() : BaseScreen() {
         //stage.addActor(countdownLabel)
         //countdownLabel.setPosition(screenWidth/2 - countdownLabel.width/2, screenHeight/2 + countdownLabel.height/2)
 
+        // Music
+        dungeonMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/spy-game-56943.wav"))
+        dungeonMusic.setLooping(true)
+        dungeonMusic.volume = 200f
+        dungeonMusic.play()
+
         // Background Picture
         val background = BaseActor(0f, 0f, stage)
         background.loadTexture("dragonBackground.png")
@@ -253,6 +265,7 @@ class EnterDungeonScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                dungeonMusic.stop()
                 Awake.setActiveScreen(DungeonScreen(DungeonMap(dungeonLevel)))
                 return true
             }
@@ -271,6 +284,10 @@ class EnterDungeonScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                val weaponMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/item-equip-6904.wav"))
+                weaponMusic.volume = 200f
+                weaponMusic.play()
+
                 if (!selected) {
                     return true
                 }
@@ -281,6 +298,7 @@ class EnterDungeonScreen() : BaseScreen() {
                     backPackItem.remove(card)
                     storage.add(card)
                 }
+                dungeonMusic.stop()
                 Awake.setActiveScreen(EnterDungeonScreen())
                 return true
             }
@@ -299,6 +317,7 @@ class EnterDungeonScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                dungeonMusic.stop()
                 Awake.setActiveScreen(VillageScreen())
                 return true
             }

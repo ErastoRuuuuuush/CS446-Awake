@@ -1,6 +1,7 @@
 package com.cs446.awake.ui
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -45,6 +46,8 @@ class BackpackScreen(val g: Int) : BaseScreen() {
     private lateinit var use : Label
     private lateinit var ip : Label
     private lateinit var mp : Label
+
+    private lateinit var villageMusic : Music
 
     // Function that active the timer
     private fun startTimer(frames: Int, endTime : () -> Unit, duringTime : () -> Unit) {
@@ -131,6 +134,7 @@ class BackpackScreen(val g: Int) : BaseScreen() {
                     )
                     borderImage.setPosition(cardActor.x-10, cardActor.y-10)
                     borderImage.isVisible = true
+                    cardActor.toFront()
                     return true
                 }
             })
@@ -165,6 +169,7 @@ class BackpackScreen(val g: Int) : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                villageMusic.stop()
                 Awake.setActiveScreen(BackpackScreen(g))
                 return true
             }
@@ -176,6 +181,12 @@ class BackpackScreen(val g: Int) : BaseScreen() {
         Gdx.input.inputProcessor = stage
         //stage.addActor(countdownLabel)
         //countdownLabel.setPosition(screenWidth/2 - countdownLabel.width/2, screenHeight/2 + countdownLabel.height/2)
+
+        // Music
+        villageMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/village_bgm.wav"))
+        villageMusic.setLooping(true)
+        villageMusic.volume = 200f
+        villageMusic.play()
 
         // Background Picture
         val background = BaseActor(0f, 0f, stage)
@@ -262,6 +273,7 @@ class BackpackScreen(val g: Int) : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                villageMusic.stop()
                 Awake.setActiveScreen(VillageScreen())
                 return true
             }

@@ -1,6 +1,7 @@
 package com.cs446.awake.ui
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -97,6 +98,8 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
     private var endTimeFcn : () -> Unit = {} // lambda function about what to do when time ends
     private var duringTimeFcn : () -> Unit = {} // lambda function about what to do when each frame passed.
 
+    private lateinit var battleMusic : Music
+    private lateinit var hitSound : Music
 
     // Function that active the timer
     private fun startTimer(frames: Int, endTime : () -> Unit, duringTime : () -> Unit) {
@@ -124,7 +127,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
     // Notify that character froze and call the endTurn.
     private fun frozeNotify(who: String) {
         // Character is froze due to the negative state applied, cannot use any card.
-        val frozeNotification = Label("$who froze due to negative state!", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        val frozeNotification = Label("$who froze due to negative state!", Label.LabelStyle(BitmapFont(Gdx.files.internal("font/font4_blue.fnt")), Color.WHITE))
         frozeNotification.setPosition(screenWidth/2 - frozeNotification.width/2, screenHeight/2 - frozeNotification.height/2)
         stage.addActor(frozeNotification)
         // Let notification vanish after 1 sec of display
@@ -227,7 +230,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
     }
 
     private fun noCardNofity(who: String) {
-        val noCard = Label("$who no Cards!", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        val noCard = Label("$who no Cards!", Label.LabelStyle(BitmapFont(Gdx.files.internal("font/font4_black.fnt")), Color.WHITE))
         noCard.setPosition(screenWidth/2 - noCard.width/2, screenHeight/2 + noCard.height)
         stage.addActor(noCard)
     }
@@ -330,9 +333,14 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         aICursor.remove()
         playerCursor.remove()
 
-        val winLabel = Label("You Win!", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        val winLabel = Label("You Win!", Label.LabelStyle(BitmapFont(Gdx.files.internal("font/font4_black.fnt")), Color.WHITE))
         winLabel.setPosition(screenWidth/2 - winLabel.width/2, screenHeight/2 - winLabel.height/2)
         stage.addActor(winLabel)
+
+        val winSound = Gdx.audio.newMusic(Gdx.files.internal("sound/mixkit-game-level-completed-2059.wav"))
+        winSound.volume = 200f
+        winSound.play()
+
         // TODO: Display enemy die animation or pause enemy animation
         // Let enemy vanish
         val duringTime : () -> Unit = { enemyDisplay.setOpacity(worldTimer / 60f) }
@@ -346,6 +354,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
                 backPackItem = ItemCardData(mutableListOf())
                 backPackMaterial = MaterialCardData(mutableListOf())
                 battleItem = ItemCardData(mutableListOf())
+                dungeonLevel = 1
                 setActiveScreen(VillageScreen())
                 dumpJson()
             } else {
@@ -353,6 +362,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
                 backPackItem.append(battleItem)
                 battleItem = ItemCardData(mutableListOf()) // clear battle item
                 if (dungeonMap != null) {
+                    battleMusic.stop()
                     setActiveScreen(DungeonScreen(dungeonMap as DungeonMap))
                 }
                 dumpJson()
@@ -373,13 +383,17 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         aICursor.remove()
         playerCursor.remove()
 
+        val loseSound = Gdx.audio.newMusic(Gdx.files.internal("sound/mixkit-player-losing-or-failing-2042.wav"))
+        loseSound.volume = 200f
+        loseSound.play()
+
         // TODO: Exit back to Village.
-        val looseLabel = Label("You Lose!", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        val looseLabel = Label("You Lose!", Label.LabelStyle(BitmapFont(Gdx.files.internal("font/font4_black.fnt")), Color.WHITE))
         looseLabel.setPosition(screenWidth/2 - looseLabel.width/2, screenHeight/2 - looseLabel.height/2)
         stage.addActor(looseLabel)
 
-        val back = Label(">> Back to Village <<", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
-        back.setPosition(screenWidth/2 - back.width/2, screenHeight/2 - back.height)
+        val back = Label(">> Back to Village <<", Label.LabelStyle(BitmapFont(Gdx.files.internal("font/font4_white.fnt")), Color.WHITE))
+        back.setPosition(screenWidth/2 - back.width/2, screenHeight/2 - back.height-100f)
         stage.addActor(back)
 
         back.addListener(object : InputListener() {
@@ -394,7 +408,9 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
                 backPackItem = ItemCardData(mutableListOf())
                 backPackMaterial = MaterialCardData(mutableListOf())
                 battleItem = ItemCardData(mutableListOf())
+                battleMusic.stop()
                 setActiveScreen(VillageScreen())
+                dungeonLevel = 1
                 return true
             }
         })
@@ -438,6 +454,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
             )
 
             cardActor.setOnDropIntersect {
+                hitSound.play()
                 if (useCard(card)) {
                     cardActor.remove()
                     borderImage.remove()
@@ -520,7 +537,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
 
         // Background Picture
         val background = BaseActor(0f, 0f, stage)
-        background.loadTexture("battle4.png")
+        background.loadTexture("battle$dungeonLevel.png")
         background.setSize(screenWidth, (screenWidth / background.width * background.height))
         background.centerAtPosition(screenWidth / 2, screenHeight / 2)
 
@@ -565,7 +582,6 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         enemyImageActor.centerAtPosition(screenWidth - 350f, screenHeight - 150f)
 
         // player actor
-
         playerImageActor = BaseActor(0f, 0f, stage)
         playerImageActor.loadTexture(player.playerImage)
         playerImageActor.setSize(playerImageActor.width/5*3, playerImageActor.height/5*3)
@@ -580,6 +596,10 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         // Description
         descriptionTable.setBackground(TextureRegionDrawable(TextureRegion(descriptionTexture)))
         descriptionFont.getData().setScale(0.8f)
+
+        // Music
+        hitSound = Gdx.audio.newMusic(Gdx.files.internal("sound/card_hit.wav"))
+        hitSound.volume = 200f
 
         // State
         for ((stateIndex, state) in stateList.withIndex()) {
@@ -614,7 +634,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         // TODO: Better display (using pic or other text font)
         // AI-Round Indicator
         // * Not yet added to stage, only added when AI turn starts
-        infoAITurn = Label("AI-Round", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        infoAITurn = Label("AI-Round", Label.LabelStyle(BitmapFont(Gdx.files.internal("font/font4_brown.fnt")), Color.WHITE))
         infoAITurn.y = screenHeight / 2 + infoAITurn.height / 2
 
         aITurn = BaseActor(0f, 0f, stage, inTable = true)
@@ -631,7 +651,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         aICursor.setPosition(enemyImageActor.x + 475f, enemyImageActor.y - 160f)
         // Player-Round Indicator
         // * Not yet added to stage, only added when Player turn starts
-        infoPlayerTurn = Label("Your-Round", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
+        infoPlayerTurn = Label("Your-Round", Label.LabelStyle(BitmapFont(Gdx.files.internal("font/font4_brown.fnt")), Color.WHITE))
         infoPlayerTurn.y = screenHeight / 2 + infoPlayerTurn.height / 2
         playerTurn = BaseActor(0f, 0f, stage, inTable = true)
         playerTurn.loadTexture("hero_bar_highlight.png")
@@ -674,6 +694,12 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
     //   * text info (touch to start)
     private fun battleEnterScreen() {
         // Background Picture
+        // Music
+        battleMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/gamemusic-6082.wav"))
+        battleMusic.setLooping(true)
+        battleMusic.volume = 200f
+        battleMusic.play()
+
         val background = BaseActor(0f, 0f, stage)
         background.loadTexture("dragon.jpeg")
         background.setSize(screenWidth, (screenWidth / background.width * background.height))

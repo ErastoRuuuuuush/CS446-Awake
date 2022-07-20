@@ -1,6 +1,7 @@
 package com.cs446.awake.ui
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -66,6 +67,7 @@ class MergeScreen() : BaseScreen() {
 
     private lateinit var back : BaseActor
 
+    private lateinit var villageMusic : Music
 
     // Function that active the timer
     private fun startTimer(frames: Int, endTime : () -> Unit, duringTime : () -> Unit) {
@@ -218,6 +220,12 @@ class MergeScreen() : BaseScreen() {
 
     override fun initialize() {
 
+        // Music
+        villageMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/village_bgm.wav"))
+        villageMusic.setLooping(true)
+        villageMusic.volume = 200f
+        villageMusic.play()
+
         // set background
         background = BaseActor(0f, 0f, stage)
         background.loadTexture("dragonBackground.png") //TODO: background image
@@ -310,6 +318,10 @@ class MergeScreen() : BaseScreen() {
                 println("Merge Clicked")
                 if (outputCard != null) {
                     println("Card Merged")
+
+                    val mergeSound = Gdx.audio.newMusic(Gdx.files.internal("sound/mixkit-arcade-game-complete-or-approved-mission-205.wav"))
+                    mergeSound.volume = 200f
+                    mergeSound.play()
 
                     // txt1.isVisible = false
                     // txt2.isVisible = false
@@ -419,6 +431,7 @@ class MergeScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
+                villageMusic.stop()
                 Awake.setActiveScreen(VillageScreen())
                 return true
             }

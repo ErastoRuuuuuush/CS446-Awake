@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Array
 
 
 class Monster (val images: Array<String?>, val level: Int,  val HP: Int,
-               val charName: String, val reward: Map<MaterialCard, Int>, val actions: Deck){
+               val charName: String, val reward: Map<MaterialCard, Int>, val actions: Deck, val avator: String){
     fun getDeck (inputLevel: Int = dungeonLevel): Deck{
         //strengthen monster according to level
         val levelDiff = inputLevel - level + 1

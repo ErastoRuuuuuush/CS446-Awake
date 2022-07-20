@@ -362,5 +362,6 @@ val m42 = Monster(Array<String?>(arrayOf("Monster_lv4/monster2.png")), 4, 200,
 val m43 = Monster(Array<String?>(arrayOf("Monster_lv4/monster3.png")), 5, 250,
     "Enemy", mapOf<MaterialCard,Int>(waterGem to 1, herb to 5, electricGem to 1, goldOre to 2, ironOre to 1),
     Deck(mutableListOf(stab43, hardStrike43)))
+
 public var monsterInfo : MonsterData = MonsterData(mutableListOf(m11, m12, m21, m22, m23, m31, m32, m33, m41, m42, m43))
 
