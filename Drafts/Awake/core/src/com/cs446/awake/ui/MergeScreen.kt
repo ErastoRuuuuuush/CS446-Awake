@@ -133,7 +133,7 @@ class MergeScreen() : BaseScreen() {
             while (count > 0) {
                 val cardActor = DragDropActor(0f, 0f, stage, mergeArea, inTable = true)
                 cardActor.toFront()
-                cardActor.loadTexture("PoisonCard.png") //TODO: read card image & info
+                cardActor.loadTexture(material.img)
                 // if not on the merge area, return back to the start position
                 cardActor.setOnDropNoIntersect {
                     toMerge = false
@@ -164,7 +164,7 @@ class MergeScreen() : BaseScreen() {
                         mergeAreaCards.add(cardActor)
                         val newCard = BaseActor(0f, 0f, stage, inTable = true)
                         newCard.toFront()
-                        newCard.loadTexture("PoisonCard.png")
+                        newCard.loadTexture(oneMaterial.img)
                         mergeTable.add(newCard).expandX().pad(10f).right()
                     }
                 }
@@ -247,7 +247,7 @@ class MergeScreen() : BaseScreen() {
             ): Boolean {
                 // TODO: check empty
                 // the output item after merging
-                val outputCard = mergeData.merge(mergeData, itemInfo)
+                val outputCard = mergeData.merge()
                 println("Merge Clicked")
                 if (outputCard != null) {
                     println("Card Merged")
