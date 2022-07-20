@@ -134,63 +134,63 @@ val stoneSwordChop : ActionCard = ActionCard("stoneSwordChop", "itemAction2",
     "", 2, 0, -10, Array<State>(), 3)
 val stoneSwordStab : ActionCard = ActionCard("stoneSwordStab", "itemAction3.png",
     "", 1, 0, -5, Array<State>(), 2)
-val stoneAxChop : ActionCard = ActionCard("stoneAxChop", "skeleton1.png",
+val stoneAxChop : ActionCard = ActionCard("stoneAxChop", "itemAction4.png",
     "", 2, 0, -12, Array<State>(), 3)
-val stoneAxStrike : ActionCard = ActionCard("stoneAxStrike", "skeleton1.png",
+val stoneAxStrike : ActionCard = ActionCard("stoneAxStrike", "itemAction5.png",
     "", 3, 0, -8,
     Array<State>(arrayOf(State( Paralysis, 1))), 2)
-val archery : ActionCard = ActionCard("archery", "skeleton1.png",
+val archery : ActionCard = ActionCard("archery", "itemAction26",
     "", 2, 0, -12, Array<State>(), 7)
-val ironAxChop : ActionCard = ActionCard("ironAxChop", "skeleton1.png",
+val ironAxChop : ActionCard = ActionCard("ironAxChop", "itemAction9.png",
     "", 2, 0, -20, Array<State>(), 4)
-val ironAxStrike : ActionCard = ActionCard("ironAxStrike", "skeleton1.png",
+val ironAxStrike : ActionCard = ActionCard("ironAxStrike", "itemAction10.png",
     "", 3, 0, -15,
     Array<State>(arrayOf(State(Paralysis, 2))), 2)
-val ironAxHardStrike : ActionCard = ActionCard("ironAxHardStrike", "skeleton1.png",
+val ironAxHardStrike : ActionCard = ActionCard("ironAxHardStrike", "itemAction11.png",
     "", 7, 0, -30,
     Array<State>(arrayOf(State(Burn, 2))), 1)
-val ironSwordChop : ActionCard = ActionCard("ironSwordChop", "skeleton1.png",
+val ironSwordChop : ActionCard = ActionCard("ironSwordChop", "itemAction12.png",
     "", 2, 0, -15, Array<State>(), 3)
-val ironSwordStab : ActionCard = ActionCard("ironSwordStab", "skeleton1.png",
+val ironSwordStab : ActionCard = ActionCard("ironSwordStab", "itemAction13.png",
     "", 1, 0, -10, Array<State>(), 2)
-val ironSwordStrike : ActionCard = ActionCard("ironSwordStrike", "skeleton1.png",
+val ironSwordStrike : ActionCard = ActionCard("ironSwordStrike", "itemAction14.png",
     "", 4, 0, -15,
     Array<State>(arrayOf(State(Paralysis, 1))), 2)
-val ironHammerStrike : ActionCard = ActionCard("ironHammerStrike", "skeleton1.png",
+val ironHammerStrike : ActionCard = ActionCard("ironHammerStrike", "itemAction18.png",
     "", 2, 0, -12,
     Array<State>(arrayOf(State(Paralysis, 2))), 5)
-val ironHammerHardStrike : ActionCard = ActionCard("ironHammerHardStrike", "skeleton1.png",
+val ironHammerHardStrike : ActionCard = ActionCard("ironHammerHardStrike", "itemAction19.png",
     "", 8, 0, -40,
     Array<State>(arrayOf(State(Paralysis, 2))), 2)
-val boneSwordChop : ActionCard = ActionCard("boneSwordChop", "skeleton1.png",
+val boneSwordChop : ActionCard = ActionCard("boneSwordChop", "itemAction20.png",
     "", 2, 0, -12, Array<State>(), 4)
-val boneSwordStab : ActionCard = ActionCard("boneSwordStab", "skeleton1.png",
+val boneSwordStab : ActionCard = ActionCard("boneSwordStab", "itemAction21.png",
     "", 1, 0, -8,
     Array<State>(arrayOf(State(Poison, 2))), 3)
-val fireSwordChop : ActionCard = ActionCard("fireSwordChop", "skeleton1.png",
+val fireSwordChop : ActionCard = ActionCard("fireSwordChop", "itemAction22.png",
     "", 2, 0, -30,
     Array<State>(arrayOf(State(Burn, 1))), 7)
-val fireSwordHardStrike : ActionCard = ActionCard("fireSwordHardStrike", "skeleton1.png",
+val fireSwordHardStrike : ActionCard = ActionCard("fireSwordHardStrike", "itemAction23.png",
     "", 7, 0, -50,
     Array<State>(arrayOf(State(Burn, 2))), 2)
-val electricAxChop : ActionCard = ActionCard("electricAxChop", "skeleton1.png",
+val electricAxChop : ActionCard = ActionCard("electricAxChop", "itemAction27.png",
     "", 2, 0, -35, Array<State>(), 6)
-val electricAxHardStrike : ActionCard = ActionCard("electricAxHardStrike", "skeleton1.png",
+val electricAxHardStrike : ActionCard = ActionCard("electricAxHardStrike", "itemAction28.png",
     "", 7, 0, -30,
     Array<State>(arrayOf(State(Paralysis, 2))), 3)
-val poisonedArchery : ActionCard = ActionCard("poisonedArchery", "skeleton1.png",
+val poisonedArchery : ActionCard = ActionCard("poisonedArchery", "itemAction29.png",
     "", 2, 0, -24,
     Array<State>(arrayOf(State(Poison, 1))), 7)
-val malletStrike : ActionCard = ActionCard("malletStrike", "skeleton1.png",
+val malletStrike : ActionCard = ActionCard("malletStrike", "itemAction30.png",
     "", 3, 0, -15, Array<State>(), 5)
-val malletPerform : ActionCard = ActionCard("malletPerform", "skeleton1.png",
+val malletPerform : ActionCard = ActionCard("malletPerform", "itemAction30.png",
     "", 5, 0, -10,
     Array<State>(arrayOf(State(Sleep, 1))), 4)
-val earthShieldShield : ActionCard = ActionCard("earthShieldShield", "skeleton1.png",
+val earthShieldShield : ActionCard = ActionCard("earthShieldShield", "itemAction32.png",
     "", 3, 0, 30, Array<State>(), 5)
-val earthShieldDash : ActionCard = ActionCard("earthShieldShield", "skeleton1.png",
+val earthShieldDash : ActionCard = ActionCard("earthShieldShield", "itemAction33.png",
     "", 4, 0, -30, Array<State>(), 4)
-val heal : ActionCard = ActionCard("heal", "skeleton1.png",
+val heal : ActionCard = ActionCard("heal", "itemAction34.png",
     "", 0, 0, 20, Array<State>(), 1)
 
 // Monster Actions
