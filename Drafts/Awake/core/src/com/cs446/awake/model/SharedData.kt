@@ -132,23 +132,23 @@ val ironHammerHardStrike : ActionCard = ActionCard("ironHammerHardStrike", "skel
 
 // Items
 val stick : ItemCard = ItemCard("stick", "skeleton1.png", "a simple weapon",
-    10, actionCards = Deck(Array<ActionCard>(arrayOf(stickStrike))), level = 1)
+    10, actionCards = Deck(Array<ActionCard>(arrayOf(stickStrike))))
 val stoneSword : ItemCard = ItemCard("stoneSword", "skeleton1.png", "a simple weapon",
-    5, earth = 15, actionCards = Deck(Array<ActionCard>(arrayOf(stoneSwordStab, stoneSwordChop))), level = 1)
+    5, earth = 15, actionCards = Deck(Array<ActionCard>(arrayOf(stoneSwordStab, stoneSwordChop))))
 val stoneAx : ItemCard = ItemCard("stoneAx", "skeleton1.png", "a simple weapon",
-    10, earth = 10, actionCards = Deck(Array<ActionCard>(arrayOf(stoneAxChop, stoneAxStrike))), level = 1)
+    10, earth = 10, actionCards = Deck(Array<ActionCard>(arrayOf(stoneAxChop, stoneAxStrike))))
 val bow : ItemCard = ItemCard("bow", "skeleton1.png", "a simple weapon",
     10, 10, metal = 10, wind = 20,
-    actionCards = Deck(Array<ActionCard>(arrayOf(archery))), level = 1)
+    actionCards = Deck(Array<ActionCard>(arrayOf(archery))))
 val ironSword : ItemCard = ItemCard("ironSword", "skeleton1.png", "a simple weapon",
     10, 10, metal = 20,
-    actionCards = Deck(Array<ActionCard>(arrayOf(ironSwordStab, ironSwordChop, ironSwordStrike))), level = 1)
+    actionCards = Deck(Array<ActionCard>(arrayOf(ironSwordStab, ironSwordChop, ironSwordStrike))))
 val ironAx : ItemCard = ItemCard("ironAx", "skeleton1.png", "a simple weapon",
     5, 10, metal = 30,
-    actionCards = Deck(Array<ActionCard>(arrayOf(ironAxChop, ironAxStrike, ironAxHardStrike))), level = 1)
+    actionCards = Deck(Array<ActionCard>(arrayOf(ironAxChop, ironAxStrike, ironAxHardStrike))))
 val ironHammer : ItemCard = ItemCard("ironHammer", "skeleton1.png", "a simple weapon",
     5, earth = 10, metal = 30,
-    actionCards = Deck(Array<ActionCard>(arrayOf(ironHammerStrike, ironHammerHardStrike))), level = 1)
+    actionCards = Deck(Array<ActionCard>(arrayOf(ironHammerStrike, ironHammerHardStrike))))
 
 public var itemInfo: ItemCardData = ItemCardData(mutableListOf(stick, stoneSword, stoneAx, bow, ironSword, ironAx, ironHammer))
 
@@ -157,7 +157,7 @@ val stone : MaterialCard = MaterialCard("stone","skeleton1.png", "a stone",
     earth = 5, metal = 2, water = -2, level = 1)
 val log : MaterialCard = MaterialCard("log", "skeleton1.png", "a log",
     wood = 5, fire = 2, earth = -2, level = 1)
-public var materialInfo : CardData = CardData(mutableListOf(stone, log))
+public var materialInfo : MaterialCardData = MaterialCardData(mutableListOf(stone, log))
 
 
 public var monsterInfo : MonsterData = MonsterData(mutableListOf((Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 1, "Enemy", stone))))

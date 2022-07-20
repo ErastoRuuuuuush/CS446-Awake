@@ -4,8 +4,8 @@ import com.google.gson.Gson
 
 class ItemCard (cardName: String, img: String, usage: String, wood: Int = 0,
                  fire: Int = 0, earth: Int = 0, metal: Int = 0, water: Int = 0, electric: Int = 0,
-                  wind : Int = 0, var actionCards: Deck, count: Int = 1, level: Int = 1):
-    MergableCard(cardName, img, usage, count, wood, fire, earth, metal, water, electric, wind, level){
+                  wind : Int = 0, var actionCards: Deck, count: Int = 1):
+    MergableCard(cardName, img, usage, count, wood, fire, earth, metal, water, electric, wind){
 
     // add the action cards of this item
     override fun use() {
