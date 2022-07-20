@@ -71,8 +71,8 @@ class Awake : Game() {
         // Test Battle View
 
 //        setActiveScreen(VillageScreen())
-        setActiveScreen(VillageScreen())
-//        setActiveScreen(BattleScreen(player, enemy))
+//        setActiveScreen(VillageScreen())
+        setActiveScreen(BattleScreen(player, enemy))
     }
 
     override fun dispose() {

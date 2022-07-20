@@ -4,12 +4,18 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
+import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.g3d.particles.ParticleSorter
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.ui.*
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.Null
 import com.cs446.awake.model.*
 import com.cs446.awake.utils.*
+import java.awt.Rectangle
 import kotlin.math.abs
 
 // TODO: List
@@ -64,9 +70,13 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
 
     // description
     private val descriptionTexture =
-        Texture(Gdx.files.internal("card_empty.png"))
+        Texture(Gdx.files.internal("paperboarder.png"))
     private val descriptionImage = Image(descriptionTexture)
-    private  val descriptionTable = Table()
+    private val descriptionTable = Table()
+    private val descriptionWidth = descriptionImage.width / 2
+    private val descriptionHeight = descriptionImage.height / 4
+
+    private val descriptionFont = BitmapFont(Gdx.files.internal("Arial120Bold.fnt"))
 
 
     //// Variable of game Core
@@ -310,7 +320,13 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         val cardTotal = player.hand.size - 1
         for ((handIndex, card) in player.hand.withIndex()) {
             // TODO: Change target enemy to player for heal card, need an area to drop for player
-            val cardActor = DragDropActor(0f, 0f, stage, enemyAttackActor, playerImageActor)
+            lateinit var cardActor : DragDropActor
+            if (card.isHealCard()) {
+                cardActor = DragDropActor(0f, 0f, stage, playerImageActor)
+            } else {
+                cardActor = DragDropActor(0f, 0f, stage, enemyAttackActor)
+            }
+
             cardActor.loadTexture(card.img)
             // y-coord is set to hide the bottom half, click to elevate?
             cardActor.centerAtPosition(350f, screenHeight - 950f)
@@ -319,87 +335,53 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
                 (screenWidth - (cardTotal * cardActor.width + (cardTotal - 1) * intervalWid)) / 2 + handIndex * (cardActor.width + intervalWid),
                 70f - abs(2-handIndex) *35f
             )
-            if (card.isHealCard()) {
-                cardActor.setOnDropPlayerIntersect {
-                    cardActor.remove()
-                    useCard(card)
-                    borderImage.remove()
-                }
-                cardActor.setOnDragPlayerIntersect {
-                    val borderWidth = 30
-                    borderImage.setSize(
-                        cardActor.width + borderWidth * 2,
-                        cardActor.height + borderWidth * 2
-                    )
-
-                    borderImage.setPosition(
-                        cardActor.x - borderWidth,
-                        cardActor.y - borderWidth
-                    )
-
-                    stage.addActor(borderImage)
-                    cardActor.toFront()
-                }
-
-                cardActor.setOnDropEnemyIntersect {
-                    cardActor.setPosition(cardActor.startX, cardActor.startY)
-                    cardActor.setRotation(cardActor.startRotation)
-                    borderImage.remove()
-                }
-                cardActor.setOnDragEnemyIntersect {
-                    borderImage.remove()
-                }
-
-            } else {
-                cardActor.setOnDropEnemyIntersect {
-                    cardActor.remove()
-                    useCard(card)
-                    borderImage.remove()
-                }
-                cardActor.setOnDragEnemyIntersect {
-                    //println("CARD USING?")
-                    val borderWidth = 30
-                    borderImage.setSize(
-                        cardActor.width + borderWidth * 2,
-                        cardActor.height + borderWidth * 2
-                    )
-
-                    borderImage.setPosition(
-                        cardActor.x - borderWidth,
-                        cardActor.y - borderWidth
-                    )
-
-                    stage.addActor(borderImage)
-                    cardActor.toFront()
-                }
-
-                cardActor.setOnDropPlayerIntersect {
-                    cardActor.setPosition(cardActor.startX, cardActor.startY)
-                    cardActor.setRotation(cardActor.startRotation)
-                    borderImage.remove()
-                }
-                cardActor.setOnDragPlayerIntersect {
-                    borderImage.remove()
-                }
+            cardActor.setOnDropIntersect {
+                cardActor.remove()
+                useCard(card)
+                borderImage.remove()
             }
+            cardActor.setOnDragIntersect {
+                val borderWidth = 30
+                borderImage.setSize(
+                    cardActor.width + borderWidth * 2,
+                    cardActor.height + borderWidth * 2
+                )
+
+                borderImage.setPosition(
+                    cardActor.x - borderWidth,
+                    cardActor.y - borderWidth
+                )
+
+                stage.addActor(borderImage)
+                cardActor.toFront()
+            }
+
             cardActor.setOnClick {
                 cardActor.setRotation(0f)
-                println("clicking")
                 descriptionTable.setSize(
-                    cardActor.width,
-                    cardActor.height
+                    descriptionWidth,
+                    descriptionHeight
                 )
-                descriptionTable.setPosition(cardActor.x, cardActor.y+cardActor.height)
+
+                var descriptionLabel = Label(card.usage, Label.LabelStyle(descriptionFont, Color.WHITE))
+                descriptionLabel.setWidth(1000f)
+                descriptionLabel.setHeight(500f)
+                descriptionLabel.wrap = true
+
+                descriptionTable.add(descriptionLabel).width(400f)
+                descriptionTable.setPosition(cardActor.x - descriptionWidth / 4, cardActor.y+cardActor.height + 20f)
 
                 stage.addActor(descriptionTable)
             }
 
             cardActor.setOnDrag {
                 descriptionTable.remove()
+                descriptionTable.reset()
             }
 
             cardActor.setOnDrop {
                 descriptionTable.remove()
+                descriptionTable.reset()
             }
 
             cardActor.setOnDropNoIntersect {
@@ -470,8 +452,8 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         stage.addActor(player.energyBar)
 
         // Description
-        descriptionTable.add(descriptionImage).fill()
-//      descriptionTable.add(Label("Dummy Description", Skin())).expandY().fillY()
+        descriptionTable.setBackground(TextureRegionDrawable(TextureRegion(descriptionTexture)))
+        descriptionFont.getData().setScale(0.4f)
 
         // State
         for ((stateIndex, state) in stateList.withIndex()) {

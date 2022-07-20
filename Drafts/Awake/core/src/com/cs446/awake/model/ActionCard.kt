@@ -26,13 +26,13 @@ class ActionCard (cardName: String, img: String, usage: String = "", val energyC
         // initialize the usage if not given
         if (usage == ""){
             if (healthChange > 0){
-                this.usage += "Heals $healthChange HP, "
+                this.usage += "Heals $healthChange HP, \n"
             } else if (healthChange < 0) {
-                this.usage += "Deals ${-healthChange} damage, "
+                this.usage += "Deals ${-healthChange} damage, \n"
             }
             for (i in (0 until Effect.size)){
                 val state = Effect[i]
-                this.usage += ("applies " + state.stateName + " for ${state.effectiveRound} rounds, ")
+                this.usage += ("applies " + state.stateName + " for ${state.effectiveRound} rounds, \n")
             }
             this.usage += "and costs $energyCost energy."
         }

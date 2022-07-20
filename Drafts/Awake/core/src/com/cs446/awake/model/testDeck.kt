@@ -9,23 +9,23 @@ fun getTestDeck(): Deck {
         // make 5 - i attack cards with damage i
         var j = i
         while (j < 5) {
-            val attackCard = ActionCard(("AttackCard$i$j"),"Attack.png", "Deals ${i*10} damage after costing ${j/2} strength", 0, j/2, -i*10, Array<State>(0))
+            val attackCard = ActionCard(("AttackCard$i$j"),"Attack.png", "Deals ${i*10} damage after costing ${j/2} strength\n", 0, j/2, -i*10, Array<State>(0))
             testDeck.addCard(attackCard)
             j ++
         }
         // make a card that restores i health
 
-        val restoreCard = ActionCard("RestoreCard$i", "Heal.png", "Restores $i health after costing $i energy", i,0, i, Array<State>(0))
+        val restoreCard = ActionCard("RestoreCard$i", "Heal.png", "Restores $i health after costing $i energy\n", i,0, i, Array<State>(0))
         testDeck.addCard(restoreCard)
         i ++
     }
     // make some state cards
     i = 1
     while (i < 4){
-        val stateCard1 = ActionCard("burner$i", "Fire.png", "burns target for $i rounds",
+        val stateCard1 = ActionCard("burner$i", "Fire.png", "burns target for $i rounds\n",
             i, 0, 0, Array<State>(arrayOf(State("Burn", i))))
         testDeck.addCard(stateCard1)
-        val stateCard2 = ActionCard("poison", "PoisonCard.png", "poisons target for $i rounds",
+        val stateCard2 = ActionCard("poison", "PoisonCard.png", "poisons target for $i rounds\n",
             i-1, 0, 0, Array<State>(arrayOf(State("Poison", i), State("Sleep", i))))
         testDeck.addCard(stateCard2)
         i ++

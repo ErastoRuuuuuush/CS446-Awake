@@ -120,11 +120,11 @@ class BackpackScreen(val g: Int) : BaseScreen() {
                     showInfo(c)
                     val borderWidth = 30
                     borderImage.setSize(
-                        cardActor.width + borderWidth * 2,
+                        cardActor.width - 20,
                         cardActor.height + borderWidth * 2
                     )
                     borderImage.isVisible = true
-                    borderImage.setPosition(cardActor.x - borderWidth, cardActor.y - borderWidth)
+                    borderImage.setPosition(cardActor.x + 20, cardActor.y - borderWidth)
                     return true
                 }
             })

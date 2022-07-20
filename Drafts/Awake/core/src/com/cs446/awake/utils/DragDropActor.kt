@@ -4,16 +4,13 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.scenes.scene2d.*
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 
-
 class DragDropActor(x: Float, y: Float, s: Stage, dropTarget: AbstractActor, inTable: Boolean? = false) : AbstractActor(x, y, s, inTable = inTable){
 
     val self: DragDropActor = this
 
-    private var onDragPlayerIntersect : () -> Unit = {}
-    private var onDragEnemyIntersect : () -> Unit = {}
+    private var onDragIntersect : () -> Unit = {}
     private var onDragNoIntersect : () -> Unit = {}
-    private var onDropPlayerIntersect : () -> Unit = {}
-    private var onDropEnemyIntersect : () -> Unit = {}
+    private var onDropIntersect : () -> Unit = {}
     private var onDropNoIntersect : () -> Unit = {}
     private var onClick : () -> Unit = {}
     private var onDrag : () -> Unit = {}
@@ -57,10 +54,8 @@ class DragDropActor(x: Float, y: Float, s: Stage, dropTarget: AbstractActor, inT
                 val deltaY = y - self.grabOffsetY
 
                 self.moveBy(deltaX, deltaY)
-                if (self.isIntersect(dropEnemyTarget)) {
-                    self.onDragEnemyIntersect()
-                } else if (self.isIntersect(dropPlayerTarget)) {
-                    self.onDragPlayerIntersect()
+                if (self.isIntersect(dropTarget)) {
+                    self.onDragIntersect()
                 } else {
                     self.onDragNoIntersect()
                 }
@@ -75,10 +70,8 @@ class DragDropActor(x: Float, y: Float, s: Stage, dropTarget: AbstractActor, inT
             ) {
                 self.onDrop()
 
-                if (self.isIntersect(dropEnemyTarget)) {
-                    self.onDropEnemyIntersect()
-                } else if (self.isIntersect(dropPlayerTarget)) {
-                    self.onDropPlayerIntersect()
+                if (self.isIntersect(dropTarget)) {
+                    self.onDropIntersect()
                 } else {
                     self.onDropNoIntersect()
                 }
@@ -108,24 +101,18 @@ class DragDropActor(x: Float, y: Float, s: Stage, dropTarget: AbstractActor, inT
         onDrop = dropFunc
     }
 
-    fun setOnDragPlayerIntersect(dragIntersectFunc: () -> Unit) {
-        onDragPlayerIntersect = dragIntersectFunc
-    }
-
-    fun setOnDragEnemyIntersect(dragIntersectFunc: () -> Unit) {
-        onDragEnemyIntersect = dragIntersectFunc
+    fun setOnDragIntersect(dragIntersectFunc: () -> Unit) {
+        onDragIntersect = dragIntersectFunc
     }
 
     fun setOnDragNoIntersect(dragIntersectFunc: () -> Unit) {
         onDragNoIntersect = dragIntersectFunc
     }
 
-    fun setOnDropPlayerIntersect(dropIntersectFunc: () -> Unit) {
-        onDropPlayerIntersect = dropIntersectFunc
+    fun setOnDropIntersect(dropIntersectFunc: () -> Unit) {
+        onDropIntersect = dropIntersectFunc
     }
-    fun setOnDropEnemyIntersect(dropIntersectFunc: () -> Unit) {
-        onDropEnemyIntersect = dropIntersectFunc
-    }
+
 
     fun setOnDropNoIntersect(dropNoIntersectFunc: () -> Unit) {
         onDropNoIntersect = dropNoIntersectFunc

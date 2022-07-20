@@ -66,27 +66,6 @@ class VillageScreen() : BaseScreen() {
         background.setSize(screenWidth, (screenWidth / background.width * background.height))
         background.centerAtPosition(screenWidth / 2, screenHeight / 2)
 
-        // Menu Bar Label
-        val coin = Label("Coin: 20", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
-        val cards = Label("Cards Owned: 15/30", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
-        val attempt = Label("Best Attempt: 2/3", Label.LabelStyle(BitmapFont(Gdx.files.internal("Arial120Bold.fnt")), Color.WHITE))
-
-        // Menu Bar Picture
-        val bgPixmap = Pixmap(1, 1, Pixmap.Format.RGB565)
-        bgPixmap.setColor(Color.GRAY)
-        bgPixmap.fill()
-        val textureRegionDrawableBg = TextureRegionDrawable(TextureRegion(Texture(bgPixmap)))
-        val menuBar = Table()
-        menuBar.background = textureRegionDrawableBg
-        menuBar.setPosition(0f, screenHeight - 160f)
-        menuBar.setSize(screenWidth, 160f)
-        menuBar.top()
-        menuBar.add(coin).expandX()
-        menuBar.add(cards).expandX()
-        menuBar.add(attempt).expandX()
-        stage.addActor(menuBar)
-
-
         val house1 = BaseActor(0f, 0f, stage)
         house1.loadTexture("House1.png")
 
