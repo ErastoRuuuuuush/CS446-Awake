@@ -94,6 +94,18 @@ class DungeonScreen(private val map: DungeonMap) : BaseScreen() {
         backpackButtonActor.loadTexture("Icon_backpack.png")
         backpackButtonActor.setSize(backpackButtonActor.width/2, backpackButtonActor.height/2)
         backpackButtonActor.setPosition(screenWidth-250f, screenHeight-150f)
+        backpackButtonActor.addListener(object : InputListener() {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
+                Awake.setActiveScreen(DungeonBagScreen())
+                return true
+            }
+        })
 
         // Add Event Cards
         for (row in 0 until 3) {

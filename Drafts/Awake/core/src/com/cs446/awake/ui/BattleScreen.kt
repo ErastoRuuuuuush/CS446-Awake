@@ -346,6 +346,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
                 backPackItem = ItemCardData(mutableListOf())
                 backPackMaterial = MaterialCardData(mutableListOf())
                 battleItem = ItemCardData(mutableListOf())
+                dungeonLevel = 1
                 setActiveScreen(VillageScreen())
                 dumpJson()
             } else {
@@ -395,6 +396,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
                 backPackMaterial = MaterialCardData(mutableListOf())
                 battleItem = ItemCardData(mutableListOf())
                 setActiveScreen(VillageScreen())
+                dungeonLevel = 1
                 return true
             }
         })
@@ -520,7 +522,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
 
         // Background Picture
         val background = BaseActor(0f, 0f, stage)
-        background.loadTexture("battle4.png")
+        background.loadTexture("battle$dungeonLevel.png")
         background.setSize(screenWidth, (screenWidth / background.width * background.height))
         background.centerAtPosition(screenWidth / 2, screenHeight / 2)
 

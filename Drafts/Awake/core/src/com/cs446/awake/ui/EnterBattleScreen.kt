@@ -113,6 +113,9 @@ class EnterBattleScreen() : BaseScreen() {
                     pointer: Int,
                     button: Int
                 ): Boolean {
+                    select.loadTexture("selectButton.png")
+                    select.setSize(buttonHeight / select.height * select.width, buttonHeight)
+                    select.setPosition(screenWidth / 2 - select.width / 2, 20f)
                     showInfo(c)
                     border.isVisible = true
                     border.setSize(
@@ -257,7 +260,7 @@ class EnterBattleScreen() : BaseScreen() {
                     }
                     item.addToDeck()
                 }
-                player = Player("Hero", getHP(), getEnergy(), strength, "badlogic.jpg", deck, mutableListOf(), PlayerType.Human)
+                player = Player("Hero", getHP(), getEnergy(), strength, "hero_bar.png", deck, mutableListOf(), PlayerType.Human)
                 if (player != null && enemy != null) {
                     val p : Player = player as Player
                     val e : Enemy = enemy as Enemy

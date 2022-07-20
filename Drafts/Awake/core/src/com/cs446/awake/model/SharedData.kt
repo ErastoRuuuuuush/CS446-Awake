@@ -336,31 +336,33 @@ public var materialInfo : MaterialCardData =
 
 
 val m11 = Monster(Array<String?>(arrayOf("Monster_lv1/monster1.png")), 1, 20,
-    "Enemy", mapOf<MaterialCard,Int>(log to 2), Deck(mutableListOf(strike11)))
+
+    "Enemy", mapOf<MaterialCard,Int>(log to 2), Deck(Array<ActionCard>(arrayOf(strike11))), "Monster_lv1/monster1_bar.png")
 val m12 = Monster(Array<String?>(arrayOf("Monster_lv1/monster2.png")), 1, 30,
-    "Enemy", mapOf<MaterialCard,Int>(stone to 2), Deck(mutableListOf(strike12, stab12)))
+    "Enemy", mapOf<MaterialCard,Int>(stone to 2), Deck(Array<ActionCard>(arrayOf(strike12, stab12))),"Monster_lv1/monster2_bar.png")
 val m21 = Monster(Array<String?>(arrayOf("Monster_lv2/monster1.png")), 2, 50,
-    "Enemy", mapOf<MaterialCard,Int>(log to 4), Deck(mutableListOf(dash21)))
+    "Enemy", mapOf<MaterialCard,Int>(log to 4), Deck(Array<ActionCard>(arrayOf(dash21))),"Monster_lv2/monster1_bar.png")
 val m22 = Monster(Array<String?>(arrayOf("Monster_lv2/monster2.png")), 2, 80,
-    "Enemy", mapOf<MaterialCard,Int>(herb to 2), Deck(mutableListOf(dash22, spew22)))
+    "Enemy", mapOf<MaterialCard,Int>(herb to 2), Deck(Array<ActionCard>(arrayOf(dash22, spew22))),"Monster_lv2/monster2_bar.png")
 val m23 = Monster(Array<String?>(arrayOf("Monster_lv2/monster3.png")), 2, 100,
-    "Enemy", mapOf<MaterialCard,Int>(feather to 2, ironOre to 2), Deck(mutableListOf(hammer23, hardStrike23)))
+    "Enemy", mapOf<MaterialCard,Int>(feather to 2, ironOre to 2), Deck(Array<ActionCard>(arrayOf(hammer23, hardStrike23))),"Monster_lv2/monster3_bar.png")
 val m31 = Monster(Array<String?>(arrayOf("Monster_lv3/monster1.png")), 3, 120,
-    "Enemy", mapOf<MaterialCard,Int>(bone to 2, ironOre to 1), Deck(mutableListOf(ignite31, strike31)))
+    "Enemy", mapOf<MaterialCard,Int>(bone to 2, ironOre to 1), Deck(Array<ActionCard>(arrayOf(ignite31, strike31))),"Monster_lv3/monster1_bar.png")
 val m32 = Monster(Array<String?>(arrayOf("Monster_lv3/monster2.png")), 3, 150,
 "Enemy", mapOf<MaterialCard,Int>(bone to 3, ironOre to 1, goldOre to 1),
-    Deck(mutableListOf(strike32, hardStrike32)))
+    Deck(Array<ActionCard>(arrayOf(strike32, hardStrike32))),"Monster_lv3/monster2_bar.png")
 val m33 = Monster(Array<String?>(arrayOf("Monster_lv3/monster3.png")), 3, 180,
     "Enemy", mapOf<MaterialCard,Int>(bone to 2, fireGem to 1, goldOre to 2, stone to 2),
-    Deck(mutableListOf(shield33, dash33)))
+    Deck(Array<ActionCard>(arrayOf(shield33, dash33))),"Monster_lv3/monster3_bar.png")
 val m41 = Monster(Array<String?>(arrayOf("Monster_lv4/monster1.png")), 4, 160,
     "Enemy", mapOf<MaterialCard,Int>(waterGem to 1, herb to 3),
-    Deck(mutableListOf(shield41, spell41)))
+    Deck(Array<ActionCard>(arrayOf(shield41, spell41))),"Monster_lv4/monster1_bar.png")
 val m42 = Monster(Array<String?>(arrayOf("Monster_lv4/monster2.png")), 4, 200,
     "Enemy", mapOf<MaterialCard,Int>(waterGem to 1, herb to 5, earthGem to 1),
-    Deck(mutableListOf(freeze42, sleep42)))
+    Deck(Array<ActionCard>(arrayOf(freeze42, sleep42))),"Monster_lv4/monster2_bar.png")
 val m43 = Monster(Array<String?>(arrayOf("Monster_lv4/monster3.png")), 5, 250,
     "Enemy", mapOf<MaterialCard,Int>(waterGem to 1, herb to 5, electricGem to 1, goldOre to 2, ironOre to 1),
-    Deck(mutableListOf(stab43, hardStrike43)))
+    Deck(Array<ActionCard>(arrayOf(stab43, hardStrike43))),"Monster_lv4/monster3_bar.png")
+
 public var monsterInfo : MonsterData = MonsterData(mutableListOf(m11, m12, m21, m22, m23, m31, m32, m33, m41, m42, m43))
 

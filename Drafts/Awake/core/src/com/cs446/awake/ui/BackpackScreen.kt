@@ -131,6 +131,7 @@ class BackpackScreen(val g: Int) : BaseScreen() {
                     )
                     borderImage.setPosition(cardActor.x-10, cardActor.y-10)
                     borderImage.isVisible = true
+                    cardActor.toFront()
                     return true
                 }
             })
