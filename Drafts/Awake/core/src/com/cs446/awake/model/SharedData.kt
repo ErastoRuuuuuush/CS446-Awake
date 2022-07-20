@@ -137,6 +137,36 @@ val ironHammerStrike : ActionCard = ActionCard("ironHammerStrike", "skeleton1.pn
 val ironHammerHardStrike : ActionCard = ActionCard("ironHammerHardStrike", "skeleton1.png",
     "", 8, 0, -40,
     Array<State>(arrayOf(State(Paralysis, 2))), 2)
+val boneSwordChop : ActionCard = ActionCard("boneSwordChop", "skeleton1.png",
+    "", 2, 0, -12, Array<State>(), 3)
+val boneSwordStab : ActionCard = ActionCard("boneSwordStab", "skeleton1.png",
+    "", 1, 0, -8,
+    Array<State>(arrayOf(State(Paralysis, 2))), 2)
+val fireSwordChop : ActionCard = ActionCard("fireSwordChop", "skeleton1.png",
+    "", 2, 0, -30,
+    Array<State>(arrayOf(State(Burn, 2))), 3)
+val fireSwordHardStrike : ActionCard = ActionCard("fireSwordHardStrike", "skeleton1.png",
+    "", 7, 0, -50,
+    Array<State>(arrayOf(State(Burn, 2))), 2)
+val electricAxChop : ActionCard = ActionCard("electricAxChop", "skeleton1.png",
+    "", 2, 0, -35, Array<State>(), 4)
+val electricAxHardStrike : ActionCard = ActionCard("electricAxHardStrike", "skeleton1.png",
+    "", 7, 0, -30,
+    Array<State>(arrayOf(State(Paralysis, 2))), 1)
+val poisonedArchery : ActionCard = ActionCard("poisonedArchery", "skeleton1.png",
+    "", 2, 0, -24,
+    Array<State>(arrayOf(State(Poison, 2))), 1)
+val malletStrike : ActionCard = ActionCard("malletStrike", "skeleton1.png",
+    "", 3, 0, -15, Array<State>(), 1)
+val malletPerform : ActionCard = ActionCard("malletPerform", "skeleton1.png",
+    "", 5, 0, -10,
+    Array<State>(arrayOf(State(Sleep, 2))), 1)
+val earthShieldShield : ActionCard = ActionCard("earthShieldShield", "skeleton1.png",
+    "", 3, 0, 30, Array<State>(), 1)
+val earthShieldDash : ActionCard = ActionCard("earthShieldShield", "skeleton1.png",
+    "", 4, 0, -30, Array<State>(), 1)
+val heal : ActionCard = ActionCard("heal", "skeleton1.png",
+    "", 0, 0, 20, Array<State>(), 1)
 
 // Monster Actions
 val strike11 : ActionCard = ActionCard("strike", "skeleton1.png",
@@ -209,8 +239,30 @@ val ironAx : ItemCard = ItemCard("ironAx", "skeleton1.png", "a simple weapon",
 val ironHammer : ItemCard = ItemCard("ironHammer", "skeleton1.png", "a simple weapon",
     5, earth = 10, metal = 30,
     actionCards = Deck(Array<ActionCard>(arrayOf(ironHammerStrike, ironHammerHardStrike))))
+val boneSword : ItemCard = ItemCard("boneSword", "skeleton1.png", "a simple weapon",
+    15, 10, 15,
+    actionCards = Deck(Array<ActionCard>(arrayOf(boneSwordChop, boneSwordStab))))
+val fireSword : ItemCard = ItemCard("fireSword", "skeleton1.png", "a simple weapon",
+    fire = 70, metal = 25, electric = 2,
+    actionCards = Deck(Array<ActionCard>(arrayOf(fireSwordChop, fireSwordHardStrike))))
+val electricAx : ItemCard = ItemCard("electricAx", "skeleton1.png", "a simple weapon",
+    earth = 10, metal = 20, electric = 60,
+    actionCards = Deck(Array<ActionCard>(arrayOf(electricAxChop, electricAxHardStrike))))
+val poisonedArrow : ItemCard = ItemCard("poisonedArrow", "skeleton1.png", "a simple weapon",
+    10,  metal = 25, wind = 30,
+    actionCards = Deck(Array<ActionCard>(arrayOf(poisonedArchery))))
+val mallet : ItemCard = ItemCard("mallet", "skeleton1.png", "a simple weapon",
+    10,  water = 20, electric = 4,
+    actionCards = Deck(Array<ActionCard>(arrayOf(malletPerform, malletStrike))))
+val earthShield : ItemCard = ItemCard("earthShield", "skeleton1.png", "a simple weapon",
+    earth = 70,  metal = 25, water = 5,
+    actionCards = Deck(Array<ActionCard>(arrayOf(earthShieldDash, earthShieldShield))))
+val potion : ItemCard = ItemCard("potion", "skeleton1.png", "a simple weapon",
+    10,  water = 10, actionCards = Deck(Array<ActionCard>(arrayOf(heal))))
 
-public var itemInfo: ItemCardData = ItemCardData(mutableListOf(stick, stoneSword, stoneAx, bow, ironSword, ironAx, ironHammer))
+public var itemInfo: ItemCardData = ItemCardData(mutableListOf
+    (stick, stoneSword, stoneAx, bow, ironSword, ironAx, ironHammer, boneSword,
+    fireSword, electricAx, poisonedArrow, mallet, earthShield, potion))
 
 // materials
 val stone : MaterialCard = MaterialCard("stone","skeleton1.png", "a stone",
