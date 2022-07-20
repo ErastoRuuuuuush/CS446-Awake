@@ -128,11 +128,11 @@ public const val Sleep = "Sleep"
 
 // Info
 // ActionCards
-val stickStrike : ActionCard = ActionCard("stickStrike", "skeleton1.png",
+val stickStrike : ActionCard = ActionCard("stickStrike", "itemAction18.png",
     "", 1, 0, -5, Array<State>(), 5)
-val stoneSwordChop : ActionCard = ActionCard("stoneSwordChop", "skeleton1.png",
+val stoneSwordChop : ActionCard = ActionCard("stoneSwordChop", "itemAction2",
     "", 2, 0, -10, Array<State>(), 3)
-val stoneSwordStab : ActionCard = ActionCard("stoneSwordStab", "skeleton1.png",
+val stoneSwordStab : ActionCard = ActionCard("stoneSwordStab", "itemAction3.png",
     "", 1, 0, -5, Array<State>(), 2)
 val stoneAxChop : ActionCard = ActionCard("stoneAxChop", "skeleton1.png",
     "", 2, 0, -12, Array<State>(), 3)
