@@ -373,26 +373,6 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
                     cardActor.toFront()
                 }
 
-                cardActor.setOnClick {
-                    cardActor.setRotation(0f)
-                    println("clicking")
-                    descriptionTable.setSize(
-                        cardActor.width,
-                        cardActor.height
-                    )
-                    descriptionTable.setPosition(cardActor.x, cardActor.y+cardActor.height)
-
-                    stage.addActor(descriptionTable)
-                }
-
-                cardActor.setOnDrag {
-                    descriptionTable.remove()
-                }
-
-                cardActor.setOnDrop {
-                    descriptionTable.remove()
-                }
-
                 cardActor.setOnDropPlayerIntersect {
                     cardActor.setPosition(cardActor.startX, cardActor.startY)
                     cardActor.setRotation(cardActor.startRotation)
@@ -401,6 +381,25 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
                 cardActor.setOnDragPlayerIntersect {
                     borderImage.remove()
                 }
+            }
+            cardActor.setOnClick {
+                cardActor.setRotation(0f)
+                println("clicking")
+                descriptionTable.setSize(
+                    cardActor.width,
+                    cardActor.height
+                )
+                descriptionTable.setPosition(cardActor.x, cardActor.y+cardActor.height)
+
+                stage.addActor(descriptionTable)
+            }
+
+            cardActor.setOnDrag {
+                descriptionTable.remove()
+            }
+
+            cardActor.setOnDrop {
+                descriptionTable.remove()
             }
 
             cardActor.setOnDropNoIntersect {
@@ -519,7 +518,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         // * Not yet added to stage, only added when Player turn starts
         finishPlayerRound = BaseActor(0f, 0f, stage)
         finishPlayerRound.loadTexture("EndTurnButton.png")
-        finishPlayerRound.centerAtPosition(screenWidth - 250f, 150f)
+        finishPlayerRound.centerAtPosition(screenWidth - 250f, 400f)
         finishPlayerRound.addListener(object : InputListener() {
             override fun touchDown(
                 event: InputEvent?,

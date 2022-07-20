@@ -24,6 +24,7 @@ class BattleEvent (backImg: String, frontImg: String, val monster: Monster) : Ev
             rewarded.count = monster.reward[rewarded]!!
             backPackMaterial.add(rewarded)
         }
+
         val randomized = materialInfo.getBelowLevel(monster.level)
         if (randomized != null){
             backPackMaterial.add(randomized)

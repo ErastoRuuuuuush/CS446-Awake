@@ -189,6 +189,7 @@ val hardStrike43 : ActionCard = ActionCard("hardStrike", "skeleton1.png",
     "", 0, 0, -40,
     Array<State>(arrayOf(State(Freeze, 3))), 10)
 
+
 // Items
 val stick : ItemCard = ItemCard("stick", "skeleton1.png", "a simple weapon",
     10, actionCards = Deck(Array<ActionCard>(arrayOf(stickStrike))))
@@ -216,6 +217,7 @@ val stone : MaterialCard = MaterialCard("stone","skeleton1.png", "a stone",
     earth = 5, metal = 2, water = -2, level = 1)
 val log : MaterialCard = MaterialCard("log", "skeleton1.png", "a log",
     wood = 5, fire = 2, earth = -2, level = 1)
+
 val ironOre : MaterialCard = MaterialCard("ironOre", "skeleton1.png", "a log",
     wood = -5, fire = 5, earth = 2, metal = 10, electric = 2, wind = -2, level = 2)
 val goldOre : MaterialCard = MaterialCard("goldOre", "skeleton1.png", "a log",
@@ -243,6 +245,7 @@ val herb : MaterialCard = MaterialCard("electricGem", "skeleton1.png", "a log",
 public var materialInfo : MaterialCardData =
     MaterialCardData(mutableListOf(stone, log, ironOre, goldOre, woodGem, fireGem, earthGem, metalGem,
     waterGem, electricGem, windGem, bone, feather, herb))
+
 
 
 val m11 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 1, 20,
