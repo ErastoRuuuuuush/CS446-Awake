@@ -252,7 +252,7 @@ class EnterBattleScreen() : BaseScreen() {
                 deck = Deck()
                 for (item in battleItem.getStored()){
                     if (item !is ItemCard){
-                        println("Warning: non-material in backpack")
+                        println("Warning: non-item in item backpack")
                         continue
                     }
                     item.addToDeck()

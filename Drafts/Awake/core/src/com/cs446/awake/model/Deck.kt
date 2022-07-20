@@ -1,20 +1,21 @@
 package com.cs446.awake.model
 
-import com.badlogic.gdx.utils.Array
 
 // a deck of action cards
-class Deck (var deck: Array<ActionCard> = Array<ActionCard>()){
+class Deck (var deck: MutableList<ActionCard> = mutableListOf()){
 
     fun addCard(card: ActionCard) {
         deck.add(card)
     }
 
     fun isEmpty() : Boolean {
-        return deck.isEmpty
+        return deck.size == 0
     }
 
     fun pop() : ActionCard {
-        return deck.pop()
+        val topCard = deck[deck.size-1]
+        deck.remove(topCard)
+        return topCard
     }
 
     fun shuffle() {
