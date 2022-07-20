@@ -23,10 +23,10 @@ class Player(charName: String, HP: Int, energy: Int, strength: Int, var playerIm
         healthBar = Image(Texture(Gdx.files.internal("HP_line.png")))
         energyBar = Image(Texture(Gdx.files.internal("MP_line.png")))
 
-        healthBar.setSize(400f, 80f)
-        energyBar.setSize(400f, 80f)
-        healthBar.setPosition(350f, 90f)
-        energyBar.setPosition(350f, 40f)
+        healthBar.setSize(308f, 82f)
+        energyBar.setSize(338f, 82f)
+        healthBar.setPosition(350f, 95f)
+        energyBar.setPosition(320f, 28f)
 
         healthOriginalWidth = healthBar.width
         healthStartX = healthBar.x
@@ -44,7 +44,6 @@ class Player(charName: String, HP: Int, energy: Int, strength: Int, var playerIm
     override fun updateEnergy(energyChange: Int) {
         energy += energyChange
         if (energy > maxEnergy) energy = maxEnergy
-        energy += energyChange
         energyBar.setSize(energy.toFloat()/originalEnergy * energyOriginalWidth, energyBar.height)
     }
 

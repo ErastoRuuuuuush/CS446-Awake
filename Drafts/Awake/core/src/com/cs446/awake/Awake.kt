@@ -33,12 +33,12 @@ class Awake : Game() {
         // Create demo player
         val playerDeck = getTestDeck() // A function in file testDeck.kt
         val playerStates : MutableList<State> = mutableListOf()
-        player = Player("Hero",300, 10, 10,"badlogic.jpg", playerDeck, playerStates, PlayerType.Human)
+        player = Player("Hero",300, 10, 10,"hero_bar.png", playerDeck, playerStates, PlayerType.Human)
         // Create demo enemy
         val enemyDeck = getTestDeck()
         val enemyImage = Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png"))
         val enemyStates : MutableList<State> = mutableListOf()
-        enemy = Enemy(enemyImage,"Enemy",100, 99, 99,"badlogic.jpg", enemyDeck, enemyStates, PlayerType.AI)
+        enemy = Enemy(enemyImage,"Enemy",100, 99, 99,"enemy_bar.png", enemyDeck, enemyStates, PlayerType.AI)
 
         // For dungeon demo
         dungeonMap = DungeonMap(1)
@@ -71,11 +71,9 @@ class Awake : Game() {
     override fun create() {
         // Test Battle View
 
-//        setActiveScreen(VillageScreen())
-//        setActiveScreen(VillageScreen())
 //        setActiveScreen(EnterDungeonScreen())
-//        setActiveScreen(BattleScreen(player, enemy))
-        setActiveScreen(VillageScreen())
+        setActiveScreen(BattleScreen(player, enemy))
+//        setActiveScreen(VillageScreen())
     }
 
     override fun dispose() {

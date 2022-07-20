@@ -25,9 +25,9 @@ class Enemy(val images: Array<String?>, charName: String, HP: Int, energy: Int, 
         healthBar = Image(Texture(Gdx.files.internal("HP_line.png")))
         energyBar = Image(Texture(Gdx.files.internal("MP_line.png")))
 
-        healthBar.setSize(550f, 80f)
+        healthBar.setSize(388f, 82f)
         energyBar.setSize(550f, 80f)
-        healthBar.setPosition(1450f, 950f)
+        healthBar.setPosition(1682f, 767f)
         energyBar.setPosition(1450f, 900f)
 
         healthOriginalWidth = healthBar.width
@@ -48,7 +48,6 @@ class Enemy(val images: Array<String?>, charName: String, HP: Int, energy: Int, 
     override fun updateEnergy(energyChange: Int) {
         energy += energyChange
         if (energy > maxEnergy) energy = maxEnergy
-        energy += energyChange
         val gap = energyBar.width - energy.toFloat()/originalEnergy * energyOriginalWidth
         energyBar.setSize(energy.toFloat()/originalEnergy * energyOriginalWidth, energyBar.height)
         energyBar.setPosition(energyBar.x + gap, energyBar.y)

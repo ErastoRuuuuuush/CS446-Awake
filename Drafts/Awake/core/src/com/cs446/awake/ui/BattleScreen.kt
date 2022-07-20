@@ -313,7 +313,10 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
     // TODO: The Card should only be movable at player's turn. (currentTurn == Player)
     // TODO: The Card can apply to enemy and player itself. (need a Actor area to target to player)
     private fun renderCard() {
-        cardList.clear() // Clean all card displayed
+        for (card in cardList) {
+            card.remove()
+        }
+        cardList.clear()
 
         // Card Actor
         // TODO: Click and show card info
@@ -392,6 +395,8 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
             cardActor.setOnDragNoIntersect {
                 borderImage.remove()
             }
+            // Add to card list so can clean next round
+            cardList.add(cardActor)
         }
     }
 
@@ -436,17 +441,19 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
         // enemy actor
         enemyImageActor = BaseActor(0f, 0f, stage)
         enemyImageActor.loadTexture(enemy.enemyImage)
-        enemyImageActor.centerAtPosition(screenWidth - 220f, screenHeight - 150f)
+        enemyImageActor.setSize(enemyImageActor.width/3*2, enemyImageActor.height/5*3)
+        enemyImageActor.centerAtPosition(screenWidth - 350f, screenHeight - 150f)
 
         // player actor
 
         playerImageActor = BaseActor(0f, 0f, stage)
         playerImageActor.loadTexture(player.playerImage)
-        playerImageActor.centerAtPosition(220f, 150f)
+        playerImageActor.setSize(playerImageActor.width/5*3, playerImageActor.height/5*3)
+        playerImageActor.centerAtPosition(380f, 150f)
 
         // Bars
         stage.addActor(enemy.healthBar)
-        stage.addActor(enemy.energyBar)
+//        stage.addActor(enemy.energyBar)
         stage.addActor(player.healthBar)
         stage.addActor(player.energyBar)
 
@@ -462,7 +469,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
             // State of player
             val playerStateActor = BaseActor(0f, 0f, stage)
             playerStateActor.loadTexture("${state.lowercase()}.png")
-            playerStateActor.centerAtPosition(-650f, screenHeight - 850f)
+            playerStateActor.centerAtPosition(-650f, screenHeight - 810f)
             playerStateActor.moveBy(
                 (screenWidth - (4 * stateWidth + 3 * intervalWid)) / 2 + stateIndex * stateWidth,
                 0f
@@ -472,7 +479,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
             // State of enemy
             val enemyStateActor = BaseActor(0f, 0f, stage)
             enemyStateActor.loadTexture("${state.lowercase()}.png")
-            enemyStateActor.centerAtPosition(650f, screenHeight - 150f)
+            enemyStateActor.centerAtPosition(690f, screenHeight - 140f)
             enemyStateActor.moveBy(
                 (screenWidth - (4 * stateWidth + (4 - 1) * intervalWid)) / 2 + stateIndex * stateWidth,
                 0f
