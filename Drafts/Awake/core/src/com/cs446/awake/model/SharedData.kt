@@ -329,21 +329,21 @@ val m22 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skelet
     "Enemy", mapOf<MaterialCard,Int>(herb to 2), Deck(Array<ActionCard>(arrayOf(dash22, spew22))))
 val m23 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 2, 100,
     "Enemy", mapOf<MaterialCard,Int>(feather to 2, ironOre to 2), Deck(Array<ActionCard>(arrayOf(hammer23, hardStrike23))))
-val m31 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 2, 120,
+val m31 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 3, 120,
     "Enemy", mapOf<MaterialCard,Int>(bone to 2, ironOre to 1), Deck(Array<ActionCard>(arrayOf(ignite31, strike31))))
-val m32 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 2, 150,
+val m32 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 3, 150,
 "Enemy", mapOf<MaterialCard,Int>(bone to 3, ironOre to 1, goldOre to 1),
     Deck(Array<ActionCard>(arrayOf(strike32, hardStrike32))))
-val m33 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 2, 180,
+val m33 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 3, 180,
     "Enemy", mapOf<MaterialCard,Int>(bone to 2, fireGem to 1, goldOre to 2, stone to 2),
     Deck(Array<ActionCard>(arrayOf(shield33, dash33))))
-val m41 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 2, 160,
+val m41 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 4, 160,
     "Enemy", mapOf<MaterialCard,Int>(waterGem to 1, herb to 3),
     Deck(Array<ActionCard>(arrayOf(shield41, spell41))))
-val m42 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 2, 200,
+val m42 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 4, 200,
     "Enemy", mapOf<MaterialCard,Int>(waterGem to 1, herb to 5, earthGem to 1),
     Deck(Array<ActionCard>(arrayOf(freeze42, sleep42))))
-val m43 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 2, 250,
+val m43 = Monster(Array<String?>(arrayOf("skeleton1.png","skeleton2.png","skeleton3.png","skeleton2.png")), 5, 250,
     "Enemy", mapOf<MaterialCard,Int>(waterGem to 1, herb to 5, electricGem to 1, goldOre to 2, ironOre to 1),
     Deck(Array<ActionCard>(arrayOf(stab43, hardStrike43))))
 public var monsterInfo : MonsterData = MonsterData(mutableListOf(m11, m12, m21, m22, m23, m31, m32, m33, m41, m42, m43))
