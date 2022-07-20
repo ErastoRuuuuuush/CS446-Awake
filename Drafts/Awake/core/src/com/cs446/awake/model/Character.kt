@@ -70,10 +70,10 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
 
     abstract fun initChar()
 
-    fun update(card: ActionCard, from: Character) {
+    fun update(card: ActionCard, from: Character) : Boolean{
         // If this card is used by myself, deduct the cost, and restores health if the card allows
         if (from == this){
-            updateEnergy(0-card.energyCost)
+            if (!updateEnergy(0-card.energyCost)) return false
             updateStrength(0-card.strengthCost)
             if (card.healthChange > 0){
                 updateHealth(card.healthChange)
@@ -88,6 +88,7 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
             }
         }
         println("health $HP")
+        return true
     }
 
     fun selectRamdomCard(): ActionCard {
@@ -187,7 +188,7 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
         strength += strengthChange
     }
 
-    abstract fun updateEnergy(energyChange: Int)
+    abstract fun updateEnergy(energyChange: Int) : Boolean
 
 
     fun isDead(): Boolean {

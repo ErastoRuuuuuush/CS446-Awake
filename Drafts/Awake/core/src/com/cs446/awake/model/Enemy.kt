@@ -45,12 +45,13 @@ class Enemy(val images: Array<String?>, charName: String, HP: Int, energy: Int, 
     }
 
 
-    override fun updateEnergy(energyChange: Int) {
+    override fun updateEnergy(energyChange: Int) : Boolean{
         energy += energyChange
         if (energy > maxEnergy) energy = maxEnergy
         val gap = energyBar.width - energy.toFloat()/originalEnergy * energyOriginalWidth
         energyBar.setSize(energy.toFloat()/originalEnergy * energyOriginalWidth, energyBar.height)
         energyBar.setPosition(energyBar.x + gap, energyBar.y)
+        return true
     }
     override fun initCharImage() {
     }
