@@ -194,54 +194,54 @@ val heal : ActionCard = ActionCard("heal", "playerAction/itemAction34.png",
     "", 0, 0, 20, Array<State>(), 1)
 
 // Monster Actions
-val strike11 : ActionCard = ActionCard("strike", "lv1action3.png",
+val strike11 : ActionCard = ActionCard("strike", "Monster_action/lv1action3.png",
     "", 0, 0, -3, Array<State>(arrayOf()), 20)
-val strike12 : ActionCard = ActionCard("strike", "lv1action1.png",
+val strike12 : ActionCard = ActionCard("strike", "Monster_action/lv1action1.png",
     "", 0, 0, -5, Array<State>(arrayOf()), 20)
-val stab12 : ActionCard = ActionCard("stab", "lv1action2.png",
+val stab12 : ActionCard = ActionCard("stab", "Monster_action/lv1action2.png",
     "", 0, 0, -7, Array<State>(arrayOf()), 10)
-val dash21 : ActionCard = ActionCard("dash", "lv2action4.png",
+val dash21 : ActionCard = ActionCard("dash", "Monster_action/lv2action4.png",
     "", 0, 0, -5, Array<State>(arrayOf()), 20)
-val dash22 : ActionCard = ActionCard("dash", "lv2action8.png",
+val dash22 : ActionCard = ActionCard("dash", "Monster_action/lv2action8.png",
     "", 0, 0, -5,
     Array<State>(arrayOf(State(Poison, 1))), 15)
-val spew22 : ActionCard = ActionCard("spew", "lv2action6.png",
+val spew22 : ActionCard = ActionCard("spew", "Monster_action/lv2action6.png",
     "", 0, 0, -10,
     Array<State>(arrayOf(State(Poison, 2))), 5)
-val hammer23 : ActionCard = ActionCard("hammer", "lv2action5.png",
+val hammer23 : ActionCard = ActionCard("hammer", "Monster_action/lv2action5.png",
     "", 0, 0, -10, Array<State>(arrayOf()), 15)
-val hardStrike23 : ActionCard = ActionCard("hardStrike", "lv2action7.png",
+val hardStrike23 : ActionCard = ActionCard("hardStrike", "Monster_action/lv2action7.png",
     "", 0, 0, -20,
     Array<State>(arrayOf()), 15)
-val ignite31 : ActionCard = ActionCard("ignite", "lv3action9.png",
+val ignite31 : ActionCard = ActionCard("ignite", "Monster_action/lv3action9.png",
     "", 0, 0, -7,
     Array<State>(arrayOf(State(Burn, 1))), 10)
-val strike31 : ActionCard = ActionCard("strike", "lv3action10.png",
+val strike31 : ActionCard = ActionCard("strike", "Monster_action/lv3action10.png",
     "", 0, 0, -10, Array<State>(arrayOf()), 10)
-val strike32 : ActionCard = ActionCard("strike", "lv3action11.png",
+val strike32 : ActionCard = ActionCard("strike", "Monster_action/lv3action11.png",
     "", 0, 0, -10, Array<State>(arrayOf()), 15)
-val hardStrike32 : ActionCard = ActionCard("hardStrike", "lv3action12.png",
+val hardStrike32 : ActionCard = ActionCard("hardStrike", "Monster_action/lv3action12.png",
     "", 0, 0, -12,
     Array<State>(arrayOf(State(Burn, 2))), 5)
-val shield33 : ActionCard = ActionCard("shield", "lv3action15.png",
+val shield33 : ActionCard = ActionCard("shield", "Monster_action/lv3action15.png",
     "", 0, 0, 70, Array<State>(arrayOf()), 12)
-val dash33 : ActionCard = ActionCard("dash", "lv3action14.png",
+val dash33 : ActionCard = ActionCard("dash", "Monster_action/lv3action14.png",
     "", 0, 0, -15,
     Array<State>(arrayOf(State(Burn, 3), State(Paralysis, 1))), 18)
-val shield41 : ActionCard = ActionCard("shield", "lv4action15.png",
+val shield41 : ActionCard = ActionCard("shield", "Monster_action/lv4action15.png",
     "", 0, 0, 50, Array<State>(arrayOf()), 10)
-val spell41 : ActionCard = ActionCard("spell", "lv4action16.png",
+val spell41 : ActionCard = ActionCard("spell", "Monster_action/lv4action16.png",
     "", 0, 0, -10, Array<State>(arrayOf()), 10)
-val freeze42 : ActionCard = ActionCard("freeze", "lv4action20.png",
+val freeze42 : ActionCard = ActionCard("freeze", "Monster_action/lv4action20.png",
     "", 0, 0, -15,
     Array<State>(arrayOf(State(Freeze, 2))), 10)
-val sleep42 : ActionCard = ActionCard("sleep spell", "lv4action18.png",
+val sleep42 : ActionCard = ActionCard("sleep spell", "Monster_action/lv4action18.png",
     "", 0, 0, -15,
     Array<State>(arrayOf(State(Sleep, 1))), 10)
-val stab43 : ActionCard = ActionCard("stab", "lv4action19.png",
+val stab43 : ActionCard = ActionCard("stab", "Monster_action/lv4action19.png",
     "", 0, 0, -17,
     Array<State>(arrayOf(State(Poison, 1))), 20)
-val hardStrike43 : ActionCard = ActionCard("hardStrike", "lv4action17.png",
+val hardStrike43 : ActionCard = ActionCard("hardStrike", "Monster_action/lv4action17.png",
     "", 0, 0, -40,
     Array<State>(arrayOf(State(Freeze, 3))), 10)
 
