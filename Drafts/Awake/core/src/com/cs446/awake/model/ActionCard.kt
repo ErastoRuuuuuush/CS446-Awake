@@ -36,6 +36,7 @@ class ActionCard (cardName: String, img: String, usage: String = "", val energyC
             }
             this.usage += "and costs $energyCost energy."
         }
+    }
 
 >>>>>>> a35d701 (add data, fix battle (only current player preround))
     }

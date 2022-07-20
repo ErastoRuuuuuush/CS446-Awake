@@ -29,10 +29,6 @@ class ItemCardData (cardList: MutableList<ItemCard>): CardData(cardList as Mutab
         println("trying to remove a non-item from deck")
     }
 
-    override fun getBelowLevel(level: Int): ItemCard? {
-        return super.getBelowLevel(level) as ItemCard
-    }
-
     // return the possible merge from this list given input list
     fun merge(inputList: CardData): ItemCard?{
         var validList = ItemCardData(mutableListOf<ItemCard>())
@@ -52,7 +48,7 @@ class ItemCardData (cardList: MutableList<ItemCard>): CardData(cardList as Mutab
         return validList.randomSelect() as ItemCard?
     }
 
-    override fun randomSelect(): MergableCard? {
+    override fun randomSelect(): ItemCard? {
         return super.randomSelect() as ItemCard?
     }
 }
