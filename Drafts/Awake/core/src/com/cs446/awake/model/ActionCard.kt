@@ -30,8 +30,9 @@ class ActionCard (cardName: String, img: String, usage: String = "", val energyC
             } else if (healthChange < 0) {
                 this.usage += "Deals ${-healthChange} damage, "
             }
-            for (effect in Effect){
-                this.usage += ("applies " + effect.stateName + " for ${effect.effectiveRound} rounds, ")
+            for (i in (0 until Effect.size)){
+                val state = Effect[i]
+                this.usage += ("applies " + state.stateName + " for ${state.effectiveRound} rounds, ")
             }
             this.usage += "and costs $energyCost energy."
         }
