@@ -14,13 +14,12 @@ class ActionCard (cardName: String, img: String, usage: String = "", val energyC
         val stringItem = Gson().toJson(this, ActionCard::class.java)
         return Gson().fromJson<ActionCard>(stringItem, ActionCard::class.java)
     }
-<<<<<<< HEAD
     fun isHealCard() : Boolean {
         if (healthChange > 0) {
             return true
         }
         return false
-=======
+    }
 
 
     init {
@@ -38,6 +37,4 @@ class ActionCard (cardName: String, img: String, usage: String = "", val energyC
         }
     }
 
->>>>>>> a35d701 (add data, fix battle (only current player preround))
-    }
 }
