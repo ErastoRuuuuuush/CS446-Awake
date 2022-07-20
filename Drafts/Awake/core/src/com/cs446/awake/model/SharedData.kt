@@ -1,11 +1,8 @@
 package com.cs446.awake.model
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.utils.Array
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 
 // information about the player progress
@@ -65,6 +62,7 @@ fun getEnergy(): Int {
 
 // save the progress of game
 fun dumpJson (){// create json from class
+
     var json = Gson().toJson(storage, CardData::class.java)
     var handle = Gdx.files.local("storage")
     handle.writeString(json, false)
@@ -79,35 +77,45 @@ fun dumpJson (){// create json from class
 }
 
 fun readJson (){
-    storage = CardData(kotlin.collections.mutableListOf())
-    var handle = Gdx.files.local("storage")
-    var json = handle.readString()
-    var loaded = Gson().fromJson(json, CardData::class.java)
-    // change each MergableCard to either MaterialCard or ItemCard
-    for (card in loaded.getStored()){
-        val loadedItem = itemInfo.find(card.cardName)
-        if (loadedItem != null){
-            loadedItem.count = card.count
-            storage.add(loadedItem)
-            continue
+    var exists = Gdx.files.local("storage").exists()
+    if (exists){
+        storage = CardData(kotlin.collections.mutableListOf())
+        val handle=Gdx.files.local("storage")
+        var json = handle.readString()
+        var loaded = Gson().fromJson(json, CardData::class.java)
+        // change each MergableCard to either MaterialCard or ItemCard
+        for (card in loaded.getStored()){
+            val loadedItem = itemInfo.find(card.cardName)
+            if (loadedItem != null){
+                loadedItem.count = card.count
+                storage.add(loadedItem)
+                continue
+            }
+            val loadedMaterial = materialInfo.find(card.cardName)
+            if (loadedMaterial != null){
+                loadedMaterial.count = card.count
+                storage.add(loadedMaterial)
+                continue
+            }
+            println("find unrecognized card: " + card.cardName)
+            storage.add(card)
         }
-        val loadedMaterial = materialInfo.find(card.cardName)
-        if (loadedMaterial != null){
-            loadedMaterial.count = card.count
-            storage.add(loadedMaterial)
-            continue
-        }
-        println("find unrecognized card: " + card.cardName)
-        storage.add(card)
     }
 
-    handle = Gdx.files.local("dungeonLevel")
-    json = handle.readString()
-    dungeonLevel = Gson().fromJson(json, Int::class.java)
+    exists = Gdx.files.local("dungeonLevel").exists()
+    if (exists){
+        val handle=Gdx.files.local("dungeonLevel")
+        var json = handle.readString()
+        dungeonLevel = Gson().fromJson(json, Int::class.java)
+    }
 
-    handle = Gdx.files.local("success")
-    json = handle.readString()
-    success = Gson().fromJson(json, Int::class.java)
+    exists = Gdx.files.local("success").exists()
+    if (exists){
+        val handle=Gdx.files.local("success")
+        var json = handle.readString()
+        success = Gson().fromJson(json, Int::class.java)
+    }
+
 
     println("restored")
 }

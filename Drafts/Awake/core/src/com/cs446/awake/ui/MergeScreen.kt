@@ -217,12 +217,6 @@ class MergeScreen() : BaseScreen() {
     }
 
     override fun initialize() {
-        // test data
-        storage.add(log)
-        storage.add(log)
-        storage.add(log)
-        storage.add(log)
-        storage.add(log)
 
         // set background
         background = BaseActor(0f, 0f, stage)
