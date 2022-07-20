@@ -121,10 +121,11 @@ class EnterDungeonScreen() : BaseScreen() {
                     val borderWidth = 30
                     border.isVisible = true
                     border.setSize(
-                        cardActor.width + borderWidth * 2,
+                        cardActor.width - 20,
                         cardActor.height + borderWidth * 2
                     )
-                    border.setPosition(cardActor.x - borderWidth, cardActor.y - borderWidth)
+                    border.isVisible = true
+                    border.setPosition(cardActor.x + 20, cardActor.y - borderWidth)
                     border1.isVisible = false
                     card = c.clone()
                     v = true
@@ -179,10 +180,11 @@ class EnterDungeonScreen() : BaseScreen() {
                     val borderWidth = 30
                     border1.isVisible = true
                     border1.setSize(
-                        cardActor.width + borderWidth * 2,
+                        cardActor.width - 20,
                         cardActor.height + borderWidth * 2
                     )
-                    border1.setPosition(cardActor.x - borderWidth, cardActor.y - borderWidth)
+                    border1.isVisible = true
+                    border1.setPosition(cardActor.x + 20, cardActor.y - borderWidth)
                     border.isVisible = false
                     card = c.clone()
                     v = false

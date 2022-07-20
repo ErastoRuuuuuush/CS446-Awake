@@ -156,7 +156,7 @@ class VillageScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
-                Awake.setActiveScreen(DungeonScreen(dungeonMap))
+                Awake.setActiveScreen(MergeScreen())
                 return true
             }
         })
@@ -193,7 +193,7 @@ class VillageScreen() : BaseScreen() {
                 pointer: Int,
                 button: Int
             ): Boolean {
-                Awake.setActiveScreen(DungeonScreen(dungeonMap))
+                Awake.setActiveScreen(MergeScreen())
                 return true
             }
         })
