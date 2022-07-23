@@ -91,7 +91,8 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
         return true
     }
 
-    fun selectRamdomCard(): ActionCard {
+    // strategy for character to use card in game. default: use the first card.
+    open fun selectCard(): ActionCard {
         val card: ActionCard = hand[0]
         removeCard(card)
         return card
@@ -191,6 +192,11 @@ abstract class Character (val charName: String, val maxHP: Int, val maxEnergy: I
 
     fun isDead(): Boolean {
         return HP <= 0
+    }
+
+    init {
+        // shuffle the deck
+        deck.shuffle()
     }
 
 }

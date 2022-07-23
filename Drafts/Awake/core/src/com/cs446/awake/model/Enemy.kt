@@ -16,6 +16,13 @@ import com.cs446.awake.utils.BaseActor
 
 class Enemy(val images: Array<String?>, charName: String, HP: Int, energy: Int, strength: Int, var enemyImage: String, deck: Deck, state: MutableList<State>, playerType: PlayerType) : Character(charName, HP, energy, strength, enemyImage,deck, state, playerType) {
 
+    // use one of the hand
+    override fun selectCard(): ActionCard {
+        val ram = (0 until hand.size).random()
+        val card: ActionCard = hand[ram]
+        removeCard(card)
+        return card
+    }
     override fun initBars() {
 //        healthBar = BaseActor(0f, 0f, stage)
 //        healthBar.loadTexture("HP_line.png")

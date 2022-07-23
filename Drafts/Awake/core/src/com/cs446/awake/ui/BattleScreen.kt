@@ -151,7 +151,7 @@ class BattleScreen(private val player: Player, private val enemy: Enemy) : BaseS
 
         if (enemy.canUseCard) {
             // Enemy use one card
-            val card = currentTurn.selectRamdomCard()
+            val card = currentTurn.selectCard()
             val cardActor = BaseActor(0f, 0f, stage)
             cardActor.loadTexture(card.img)
             cardActor.centerAtPosition(screenWidth / 2, screenHeight)
