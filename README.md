@@ -2,6 +2,8 @@
 
 ### **Final version** of the project is at [**Core/Awake**](https://github.com/ErastoRuuuuuush/CS446/tree/main/Core/Awake)
 
+We implemented and testes the project in Emulator: Pixel 5 API 32 (Please set large storage and RAM when run the game).
+
 The repo for **UW CS446 Spring 2022 Section 2 Group 8**
 
 **Group members:**
@@ -15,7 +17,6 @@ The repo for **UW CS446 Spring 2022 Section 2 Group 8**
 | Richella Li | j2333li  | [richellali](https://github.com/richellali)            |
 | Yixing Gu   | y232gu   | [Roger-Gu](https://github.com/Roger-Gu)                |
 
-We implemented and testes the project in Emulator: Pixel 5 API 32 (Please set large storage and RAM when run the game).
 
 All assets used in this project have legitimate license agreement.
 Sources list:
