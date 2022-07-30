@@ -120,12 +120,15 @@ class VillageScreen() : BaseScreen() {
             ) : Boolean {
                 reset()
                 dumpJson()
+                val winLabel = Label("Reset...", Label.LabelStyle(BitmapFont(Gdx.files.internal("font/font4_brown.fnt")), Color.WHITE))
                 val duringTime: () -> Unit = {
-                    val winLabel = Label("Reset...", Label.LabelStyle(BitmapFont(Gdx.files.internal("font/font4_brown.fnt")), Color.WHITE))
                     winLabel.setPosition(screenWidth/2 - winLabel.width/2, screenHeight/2 - winLabel.height/2)
                     stage.addActor(winLabel)
                 }
-                startTimer(20, {Gdx.app.exit()}, duringTime)
+                val endTime: () -> Unit = {
+                    winLabel.remove()
+                }
+                startTimer(20, endTime, duringTime)
                 return true
             }
         })
