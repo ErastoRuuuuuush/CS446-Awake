@@ -17,9 +17,9 @@ The repo for **UW CS446 Spring 2022 Section 2 Group 8**
 | Richella Li | j2333li  | [richellali](https://github.com/richellali)            |
 | Yixing Gu   | y232gu   | [Roger-Gu](https://github.com/Roger-Gu)                |
 
-### Guidence Video at [**YouTube**](https://youtu.be/6dnE7aaDqB0)
+### 🎥 Guidence Video at [**YouTube**](https://youtu.be/6dnE7aaDqB0)
 
-### ScreenShots
+### 🖼️ ScreenShots
 
 ![image](https://user-images.githubusercontent.com/69770812/185781669-0f1ecd5e-715c-4e42-9752-dcc6490f6733.png)
 
